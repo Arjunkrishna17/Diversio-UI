@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .searchBar {
+    @apply flex text-xs w-full h-10 px-3 py-2 rounded-md border shadow-inner outline-none;
+  }
+}
