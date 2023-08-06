@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 import colors from "./src/Config/Colors.js";
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   safelist: ["bg-body"],
