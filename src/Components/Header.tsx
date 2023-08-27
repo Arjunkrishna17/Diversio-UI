@@ -6,14 +6,14 @@ import Search from "./Search";
 
 const Header = () => {
   return (
-    <div className="flex relative w-full h-20 items-center justify-center bg-gray-200 px-5 shadow-sm border">
-      <div className="flex items-center space-x-32">
+    <div className="flex relative w-screen h-20 items-center justify-center bg-gray-200 px-5 shadow-sm border">
+      <div className="flex items-center justify-between w-full space-x-5 md:space-x-10  mx-10">
         <a href="/" className="flex items-center space-x-2 ">
           <Cart className="w-12 h-12 fill-orange-500" />
-          <p className="text-2xl font-bold font-poppins">Diversio</p>
+          <p className="text-lg md:text-2xl font-bold font-poppins">Diversio</p>
         </a>
 
-        <div className="flex w-180 border">
+        <div className="flex w-full border justify-center">
           <Search />
         </div>
 

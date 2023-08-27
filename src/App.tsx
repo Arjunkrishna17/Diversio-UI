@@ -1,10 +1,19 @@
 import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import Header from "./Components/Header";
+import Electronics from "./Components/Dashboard/Electronics";
 
 const App = () => {
   return (
-    <div className="flex flex-col h-screen w-screen bg-body">
-      <Header />
+    <div className="flex flex-col bg-body h-screen">
+      <BrowserRouter>
+        <Header />
+
+        <Routes>
+          <Route path="/" element={<Electronics />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };
