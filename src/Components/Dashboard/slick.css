@@ -1,0 +1,14 @@
+.slick-prev:before,
+.slick-next:before {
+  color: #2177c6 !important;
+}
+
+.slick-slide > div {
+  margin-left: 0.625rem;
+  margin-right: 0.625rem;
+}
+
+.slick-track {
+  display: flex;
+  width: "100%";
+}
