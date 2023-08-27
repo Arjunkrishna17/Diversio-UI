@@ -11,17 +11,19 @@ const useGetFetch = (endPoint: string) => {
     const fetchData = async () => {
       try {
         const response = await fetch(BASE_URL + endPoint);
+        const jsonData = await response.json();
 
         if (response.ok) {
-          const jsonData = await response.json();
-
           setData(jsonData);
         } else {
-          throw new Error("Something went wrong, please try again later");
+          setError(jsonData);
         }
         setIsLoading(false);
       } catch (error) {
-        setError(error as string);
+        setError(
+          ("Something went wrong, please try again later, Error: " +
+            error) as string
+        );
       }
     };
 
