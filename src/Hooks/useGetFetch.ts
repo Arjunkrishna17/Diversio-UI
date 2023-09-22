@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const useGetFetch = (endPoint: string) => {
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState<any>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<undefined | string>(undefined);
 

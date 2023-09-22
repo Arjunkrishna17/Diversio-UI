@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./Components/Header";
-import Electronics from "./Components/Dashboard/Electronics";
+import Electronics from "./Components/Dashboard/Products/Electronics";
+import ProductPage from "./Components/Dashboard/Products/ProductPage";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Electronics />} />
+          <Route path="/products/:id" element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
     </div>
