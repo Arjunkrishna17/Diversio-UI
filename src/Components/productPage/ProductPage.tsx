@@ -8,6 +8,7 @@ import { productTypes } from "../Dashboard/Products/Types";
 import Button from "../Packages/Button";
 import Details from "./Details";
 import Skelton from "./Skelton";
+import AddCart from "./AddCart";
 
 interface productFetch extends useFetchDataType {
   data: productTypes;
@@ -30,8 +31,6 @@ const ProductPage = () => {
 
   const buyNowHandler = () => {};
 
-  const addToCartHandler = () => {};
-
   let body;
 
   if (isLoading) {
@@ -50,6 +49,7 @@ const ProductPage = () => {
             <div className="sticky top-28 flex items-center  justify-center  w-full pt-5  ">
               <div className="flex flex-col  space-x-5 justify-center items-center space-y-5 ">
                 <div className="flex flex-col-reverse md:flex-row md:space-x-5 md:mt-10 xl:mt-0">
+                  
                   <div className="flex md:flex-col space-x-5 md:space-x-0  md:space-y-5 justify-center">
                     {data.images.map((img) => (
                       <img
@@ -78,11 +78,7 @@ const ProductPage = () => {
                 </div>
 
                 <div className="flex w-full justify-center space-x-5 py-5">
-                  <Button
-                    text="ADD TO CART"
-                    type="secondary"
-                    callback={addToCartHandler}
-                  />
+                  <AddCart product={data} />
                   <Button
                     text="BUY NOW"
                     type="primary"
