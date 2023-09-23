@@ -1,10 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 
+import Colors from "./src/Config/Colors.js";
 import colors from "./src/Config/Colors.js";
+
+const bgColor = Object.keys(Colors).map((key) => {
+  return `bg-${key}`;
+});
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  safelist: ["bg-body"],
+  safelist: bgColor,
   theme: {
     extend: {
       fontFamily: {
@@ -21,6 +26,7 @@ module.exports = {
         130: "30rem",
         75: "19rem",
       },
+      height: { 130: "30rem" },
       colors: { ...colors },
     },
   },
