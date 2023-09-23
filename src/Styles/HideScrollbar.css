@@ -1,0 +1,21 @@
+/* Hide both horizontal and vertical scrollbars */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 11 */
+  scrollbar-height: none; /* Chrome, Safari */
+}
+
+/* Optional: Hide scrollbar thumb for WebKit-based browsers */
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0.1rem;
+}
+
+/* Optional: Hide scrollbar thumb for Firefox */
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+/* Optional: Hide scrollbar thumb for IE 11 */
+.hide-scrollbar::-ms-scrollbar-thumb {
+  display: none;
+}

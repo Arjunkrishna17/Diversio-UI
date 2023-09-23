@@ -25,22 +25,57 @@ const Electronics = () => {
     arrows: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+
+    responsive: [
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 1000,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 700,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 510,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   let content;
 
   if (isLoading) {
     content = (
-      <Skeleton
-        count={4}
-        containerClassName="flex w-full h-full space-x-5 my-5"
-        className=" h-full"
-      />
+      <div className="flex flex-col h-full w-full">
+        <Skeleton
+          count={4}
+          containerClassName="flex w-full h-full space-x-5 my-5"
+          className=" h-full"
+        />
+      </div>
     );
   } else if (error) {
-    content = <p className="text-xs text-red w-full"> {error}</p>;
+    content = (
+      <p className="text-xs text-red w-full h-full  text-red-500 "> {error}</p>
+    );
   } else {
     content = (
       <Slider {...settings}>
@@ -52,8 +87,8 @@ const Electronics = () => {
   }
 
   return (
-    <div className="w-screen min-h-[24rem]  py-5 px-3">
-      <div className="flex flex-col h-full w-full justify-center bg-white border px-10 py-5">
+    <div className="flex flex-col w-full h-[24rem]  py-5 px-3">
+      <div className="grow w-full  bg-white border px-10 py-5">
         <h3 className="font-bold">Electronics</h3>
         {content}
       </div>
