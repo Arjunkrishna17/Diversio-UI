@@ -9,7 +9,10 @@ interface detailsProps {
 const Details = ({ data }: detailsProps) => {
   const specifications = (title: string, value: string) => {
     return (
-      <div className="grid grid-cols-[10rem_auto] space-x-2 text-xs">
+      <div
+        key={title}
+        className="grid grid-cols-[10rem_auto] space-x-2 text-xs"
+      >
         <h6>{title}</h6>
         <span>: {value}</span>
       </div>
@@ -30,7 +33,7 @@ const Details = ({ data }: detailsProps) => {
 
         <div className={`flex flex-col space-y-3`}>
           {Object.keys(data.specifications).map((specs) => (
-            <div className="flex flex-col space-y-3">
+            <div key={specs} className="flex flex-col space-y-3">
               {typeof data.specifications[specs] !== "object" ? (
                 specifications(specs, data.specifications[specs])
               ) : (

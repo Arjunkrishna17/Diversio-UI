@@ -10,7 +10,7 @@ import useGetFetch from "../../../Hooks/useGetFetch";
 import { GET_PRODUCTS } from "../../../Config/ProductsAPIs";
 import ProductCard from "./ProductCard";
 import { productTypes } from "./Types";
-import { useFetchDataType } from "../../Types/Types";
+import { useFetchDataType } from "../../Constants/Types";
 
 interface electronicDataFetch extends useFetchDataType {
   data: productTypes[];

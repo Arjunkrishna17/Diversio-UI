@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useFetchDataType } from "../Types/Types";
+import { useFetchDataType } from "../Constants/Types";
 import useGetFetch from "../../Hooks/useGetFetch";
 import { GET_PRODUCTS } from "../../Config/ProductsAPIs";
 import { productTypes } from "../Dashboard/Products/Types";
@@ -49,7 +49,6 @@ const ProductPage = () => {
             <div className="sticky top-28 flex items-center  justify-center  w-full pt-5  ">
               <div className="flex flex-col  space-x-5 justify-center items-center space-y-5 ">
                 <div className="flex flex-col-reverse md:flex-row md:space-x-5 md:mt-10 xl:mt-0">
-                  
                   <div className="flex md:flex-col space-x-5 md:space-x-0  md:space-y-5 justify-center">
                     {data.images.map((img) => (
                       <img

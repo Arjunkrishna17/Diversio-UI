@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
+import { BASE_URL } from "../Config/ProductsAPIs";
 
 const useGetFetch = (endPoint: string) => {
   const [data, setData] = useState<any>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<undefined | string>(undefined);
-
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +27,7 @@ const useGetFetch = (endPoint: string) => {
     };
 
     fetchData();
-  }, [endPoint, BASE_URL]);
+  }, [endPoint]);
 
   return { data, isLoading, error };
 };
