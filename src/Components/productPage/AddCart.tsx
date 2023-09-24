@@ -1,59 +1,33 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import Button from "../Packages/Button";
 import { productTypes } from "../Dashboard/Products/Types";
-import { CART } from "../../Config/LocStorage";
+import { ProductContext } from "../../Context/Product";
 
 interface addCartProps {
   product: productTypes;
 }
 
-interface savedProducts {
-  id: string;
-  quantity: number;
-}
-
 const AddCart = ({ product }: addCartProps) => {
-  const addToLocalStorage = (data: string) => {
-    localStorage.setItem(CART, data);
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
-  const existingProductHandler = (
-    product: string,
-    selectedProductId: string
-  ) => {
-    let cartProductParsed = (JSON.parse(product) as savedProducts[]) || [];
-
-    if (cartProductParsed.length) {
-      const indexOfProduct = cartProductParsed.findIndex(
-        (product) => product.id === selectedProductId
-      );
-
-      if (indexOfProduct !== -1) {
-        cartProductParsed[indexOfProduct].quantity += 1;
-      } else {
-        cartProductParsed.push({ id: selectedProductId, quantity: 1 });
-      }
-
-      addToLocalStorage(JSON.stringify(cartProductParsed));
-    }
-  };
+  const productCtx = useContext(ProductContext);
 
   const addToCartHandler = (productId: string) => {
-    const cartProductString = localStorage.getItem("cart");
+    setIsLoading(true);
 
-    if (cartProductString) {
-      existingProductHandler(cartProductString, productId);
-    } else {
-      const newProduct = JSON.stringify([{ id: productId, quantity: 1 }]);
-      addToLocalStorage(newProduct);
-    }
+    const timeId = setTimeout(() => {
+      productCtx.addProduct(productId);
+      setIsLoading(false);
+      clearTimeout(timeId);
+    }, 500);
   };
 
   return (
     <Button
       text="ADD TO CART"
       type="secondary"
+      isLoading={isLoading}
       callback={() => addToCartHandler(product._id)}
     />
   );

@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Header from "./Components/Header";
+import Header from "./Components/Header/Header";
 import Electronics from "./Components/Dashboard/Products/Electronics";
 import ProductPage from "./Components/productPage/ProductPage";
+import Cart from "./Components/Packages/Cart/Cart";
 
 const App = () => {
   return (
@@ -11,10 +12,11 @@ const App = () => {
       <BrowserRouter>
         <Header />
 
-        <div className="grow ">
+        <div className="grow">
           <Routes>
             <Route path="/" element={<Electronics />} />
             <Route path="/products/:id" element={<ProductPage />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </div>
       </BrowserRouter>

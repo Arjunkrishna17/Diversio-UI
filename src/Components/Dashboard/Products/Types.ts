@@ -8,4 +8,5 @@ export interface productTypes {
   price: number;
   specifications: any;
   stock: number;
+  seller: string;
 }
