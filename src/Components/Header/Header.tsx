@@ -5,8 +5,12 @@ import { ReactComponent as Cart } from "../../Images/Cart.svg";
 import Search from "./Search";
 import Button from "../Packages/Button";
 import ShoppingCart from "./ShoppingCart";
+import { useNavigate } from "react-router-dom";
+import { LOGIN } from "../../Config/commonEndpoints";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col shrink-0 sticky top-0 z-30 w-full space-y-2 py-3  px-8 bg-gray-200  shadow-sm border">
       <div className="flex items-center justify-between w-full space-x-5">
@@ -20,7 +24,11 @@ const Header = () => {
         </div>
 
         <div className="flex space-x-5 items-center">
-          <Button text="Login" type="primary" callback={() => {}} />
+          <Button
+            text="Login"
+            type="primary"
+            callback={() => navigate(LOGIN)}
+          />
 
           <ShoppingCart />
         </div>

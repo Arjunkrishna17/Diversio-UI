@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { ProductProvider } from "./Context/Product";
+import { AuthProvider } from "./Context/Auth";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ProductProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ProductProvider>
   </React.StrictMode>
 );

@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
-import { productTypes } from "../../Dashboard/Products/Types";
-import { ProductContext } from "../../../Context/Product";
-import DetailsOnHover from "../DetailsOnHover";
+import { productTypes } from "../Dashboard/Products/Types";
+import { ProductContext } from "../../Context/Product";
+import DetailsOnHover from "../Packages/DetailsOnHover";
 
 interface cartCardProps {
   product: productTypes;
@@ -62,7 +62,7 @@ const CartCard = ({ product }: cartCardProps) => {
             >
               <img
                 className="w-5 h-5"
-                src={require("../../../Images/Dash.svg").default}
+                src={require("../../Images/Dash.svg").default}
                 alt="plus"
               />
             </button>
@@ -73,7 +73,7 @@ const CartCard = ({ product }: cartCardProps) => {
             >
               <img
                 className="w-5 h-5"
-                src={require("../../../Images/Plus.svg").default}
+                src={require("../../Images/Plus.svg").default}
                 alt="plus"
               />
             </button>

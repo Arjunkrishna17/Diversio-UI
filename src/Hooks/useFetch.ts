@@ -3,19 +3,25 @@ import { BASE_URL } from "../Config/ProductsAPIs";
 
 interface requestConfig {
   endPoint: string;
-  method?: "GET" | "PUT" | "DELETE" | "POST";
+  method?: string;
   body?: Object;
 }
 
-const useFetch = (initialLoadingOnly = false) => {
-  const [isLoading, setIsLoading] = useState(true);
+interface props {
+  initialLoadingOnly?: boolean;
+  loading?: boolean;
+}
+
+const useFetch = ({ initialLoadingOnly = false, loading = true }: props) => {
+  const [isLoading, setIsLoading] = useState(loading);
   const [error, setError] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>(undefined);
 
   const fetchData = useCallback(
     async (requestConfig: requestConfig) => {
       let header = {};
       let body = {};
+      let jsonData;
 
       if (!initialLoadingOnly) {
         setIsLoading(true);
@@ -44,8 +50,9 @@ const useFetch = (initialLoadingOnly = false) => {
 
         if (response.ok) {
           setData(data);
+          jsonData = data;
         } else {
-          setData([]);
+          setData(undefined);
           setError(data);
         }
         setIsLoading(false);
@@ -53,6 +60,8 @@ const useFetch = (initialLoadingOnly = false) => {
         setIsLoading(false);
         setError("Something went wrong!, please try again later.");
       }
+
+      return { data: jsonData };
     },
     [initialLoadingOnly]
   );
