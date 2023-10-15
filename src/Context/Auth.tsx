@@ -16,7 +16,7 @@ interface token {
 
 interface authContextTypes {
   loginHandler: (token: string) => void;
-  logoutHandler: (token: string) => void;
+  logoutHandler: () => void;
   username: string | null;
   user: string | null;
   loggedIn: boolean;

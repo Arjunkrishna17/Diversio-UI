@@ -6,7 +6,7 @@ import Electronics from "./Components/Dashboard/Products/Electronics";
 import ProductPage from "./Components/productPage/ProductPage";
 import Cart from "./Components/Cart/Cart";
 import Login from "./Components/Login/Login";
-import { LOGIN } from "./Config/commonEndpoints";
+import { CREATE_ACCOUNT, LOGIN } from "./Config/commonEndpoints";
 import { HOME, PRODUCT_PAGE } from "./Config/ProductRoutes";
 import { CART } from "./Config/LocStorage";
 
@@ -19,6 +19,7 @@ const App = () => {
         <div className="grow">
           <Routes>
             <Route path={LOGIN} element={<Login />} />
+            <Route path={CREATE_ACCOUNT} element={<Login />} />
             <Route path={HOME} element={<Electronics />} />
             <Route path={PRODUCT_PAGE + "/:id"} element={<ProductPage />} />
             <Route path={CART} element={<Cart />} />

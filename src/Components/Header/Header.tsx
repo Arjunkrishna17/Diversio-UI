@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { ReactComponent as Cart } from "../../Images/Cart.svg";
 
 import Search from "./Search";
 import Button from "../Packages/Button";
 import ShoppingCart from "./ShoppingCart";
-import { useNavigate } from "react-router-dom";
-import { LOGIN } from "../../Config/commonEndpoints";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CREATE_ACCOUNT, LOGIN } from "../../Config/commonEndpoints";
+import { AuthContext } from "../../Context/Auth";
+
+const enum BUTTON_TYPE {
+  LOGIN,
+  LOGOUT,
+}
 
 const Header = () => {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
+  const location = useLocation();
+
+  const hideLogin =
+    location.pathname === CREATE_ACCOUNT || location.pathname === LOGIN;
+
+  const buttonHandler = (type: BUTTON_TYPE) => {
+    if (BUTTON_TYPE.LOGOUT) {
+      authCtx.logoutHandler();
+    }
+
+    navigate(LOGIN);
+  };
 
   return (
     <div className="flex flex-col shrink-0 sticky top-0 z-30 w-full space-y-2 py-3  px-8 bg-gray-200  shadow-sm border">
@@ -24,11 +43,17 @@ const Header = () => {
         </div>
 
         <div className="flex space-x-5 items-center">
-          <Button
-            text="Login"
-            type="primary"
-            callback={() => navigate(LOGIN)}
-          />
+          {!hideLogin && (
+            <Button
+              text={authCtx.loggedIn ? "Logout" : "Login"}
+              type="primary"
+              callback={() => {
+                buttonHandler(
+                  authCtx.loggedIn ? BUTTON_TYPE.LOGOUT : BUTTON_TYPE.LOGIN
+                );
+              }}
+            />
+          )}
 
           <ShoppingCart />
         </div>

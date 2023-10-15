@@ -1,14 +1,17 @@
 import React from "react";
 
 interface props {
-  callback: (input: string) => void;
+  callback: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+  name?: string;
 }
 
-const Input = ({ callback }: props) => {
+const Input = ({ callback, type, name }: props) => {
   return (
     <input
-      onChange={(e) => callback(e.target.value)}
-      type="text"
+      onChange={callback}
+      name={name}
+      type={type ? type : "text"}
       className="flex w-full h-fit text-xs  px-3 py-2 rounded-md border border-stone-300 shadow-inner outline-none"
     />
   );
