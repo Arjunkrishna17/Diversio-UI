@@ -2,15 +2,17 @@ import React, { useEffect, useCallback, useContext } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
-import { GET_CART_PRODUCTS } from "../../../Config/ProductsAPIs";
-import useFetch from "../../../Hooks/useFetch";
+import { GET_CART_PRODUCTS } from "../../Config/ProductsAPIs";
+import useFetch from "../../Hooks/useFetch";
 import CartCard from "./CartCard";
-import { ProductContext } from "../../../Context/Product";
-import { productTypes } from "../../Dashboard/Products/Types";
-import Button from "../Button";
+import { ProductContext } from "../../Context/Product";
+import { productTypes } from "../Dashboard/Products/Types";
+import Button from "../Packages/Button";
 
 const Cart = () => {
-  const { isLoading, error, data, fetchData } = useFetch(true);
+  const { isLoading, error, data, fetchData } = useFetch({
+    initialLoadingOnly: true,
+  });
 
   const productCtx = useContext(ProductContext);
 
@@ -60,7 +62,7 @@ const Cart = () => {
     );
   } else if (error) {
     body = <p className="flex w-full text-red tex-xs">{error}</p>;
-  } else if (!data || !data.length) {
+  } else if (!data || (data && !data.length)) {
     body = (
       <div className="flex w-full h-full ">
         <div className="flex flex-col space-y-5 w-full h-40 bg-white rounded-md shadow-md items-center justify-center">
