@@ -23,7 +23,11 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isLoading, error, fetchData } = useFetch({ loading: false });
+  const {
+    isLoading,
+    error,
+    httpRequest: fetchData,
+  } = useFetch({ loading: false });
 
   const authContext = useContext(AuthContext);
 

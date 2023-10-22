@@ -9,7 +9,7 @@ const ShoppingCart = () => {
   const productCtx = useContext(ProductContext);
   const navigate = useNavigate();
 
-  const cartCount = productCtx.cartProducts.length;
+  const cartCount = productCtx.products.length;
 
   const onClickHandler = () => {
     navigate(CART_ROUTE);

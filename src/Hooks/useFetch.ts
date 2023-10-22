@@ -17,11 +17,12 @@ const useFetch = ({ initialLoadingOnly = false, loading = true }: props) => {
   const [error, setError] = useState("");
   const [data, setData] = useState<any>(undefined);
 
-  const fetchData = useCallback(
+  const httpRequest = useCallback(
     async (requestConfig: requestConfig) => {
       let header = {};
       let body = {};
       let jsonData;
+      let success = false;
 
       if (!initialLoadingOnly) {
         setIsLoading(true);
@@ -51,6 +52,7 @@ const useFetch = ({ initialLoadingOnly = false, loading = true }: props) => {
         if (response.ok) {
           setData(data);
           jsonData = data;
+          success = true;
         } else {
           setData(undefined);
           setError(data);
@@ -61,12 +63,17 @@ const useFetch = ({ initialLoadingOnly = false, loading = true }: props) => {
         setError("Something went wrong!, please try again later.");
       }
 
-      return { data: jsonData };
+      return { data: jsonData, success: success };
     },
     [initialLoadingOnly]
   );
 
-  return { data: data, error: error, isLoading: isLoading, fetchData };
+  return {
+    data: data,
+    error: error,
+    isLoading: isLoading,
+    httpRequest: httpRequest,
+  };
 };
 
 export default useFetch;

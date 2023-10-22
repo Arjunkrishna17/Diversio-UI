@@ -19,7 +19,11 @@ interface userInfo {
 }
 
 const CreateAccount = () => {
-  const { error, isLoading, fetchData } = useFetch({ loading: false });
+  const {
+    error,
+    isLoading,
+    httpRequest: fetchData,
+  } = useFetch({ loading: false });
   const [showSuccess, setShowSuccess] = useState(false);
 
   const authCtx = useContext(AuthContext);

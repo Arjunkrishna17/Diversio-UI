@@ -20,6 +20,7 @@ interface authContextTypes {
   username: string | null;
   user: string | null;
   loggedIn: boolean;
+  token: string;
 }
 
 export const AuthContext = createContext<authContextTypes>({
@@ -28,12 +29,14 @@ export const AuthContext = createContext<authContextTypes>({
   loggedIn: false,
   username: "",
   user: "",
+  token: "",
 });
 
 let TIMER_ID: NodeJS.Timer;
 
 export const AuthProvider = ({ children }: authProvider) => {
   const [decodedToken, setDecodedToken] = useState<null | token>(null);
+  const [token, setToken] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
   const tokenExpHandler = (tokenData: token) => {
@@ -51,7 +54,7 @@ export const AuthProvider = ({ children }: authProvider) => {
 
     const handler = () => {
       const isTokenExpired = tokenExpHandler(decodedToken);
-      
+
       if (isTokenExpired) {
         logoutHandler();
         clearInterval(TIMER_ID);
@@ -68,6 +71,7 @@ export const AuthProvider = ({ children }: authProvider) => {
   const loginHandler = useCallback(
     (token: string) => {
       if (token) {
+        setToken(token);
         const decodedToken: token = jwtDecode(token);
 
         localStorage.setItem(TOKEN, token);
@@ -100,6 +104,7 @@ export const AuthProvider = ({ children }: authProvider) => {
     loggedIn: loggedIn,
     username: decodedToken ? decodedToken.username : decodedToken,
     user: decodedToken ? decodedToken.user : decodedToken,
+    token: token,
   };
 
   return (
