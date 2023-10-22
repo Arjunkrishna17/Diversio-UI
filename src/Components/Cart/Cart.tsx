@@ -1,52 +1,19 @@
-import React, { useEffect, useCallback, useContext } from "react";
+import React, { useContext } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
-import { GET_CART_PRODUCTS } from "../../Config/ProductsAPIs";
-import useFetch from "../../Hooks/useFetch";
 import CartCard from "./CartCard";
 import { ProductContext } from "../../Context/Product";
-import { productTypes } from "../Dashboard/Products/Types";
+
 import Button from "../Packages/Button";
+import { savedProducts } from "../Constants/Types";
 
 const Cart = () => {
-  const { isLoading, error, data, fetchData } = useFetch({
-    initialLoadingOnly: true,
-  });
-
   const productCtx = useContext(ProductContext);
-
-  const getCartProducts = useCallback(
-    async (ids: string) => {
-      const url = GET_CART_PRODUCTS + "?productIds=" + ids;
-
-      const requestConfig = {
-        endPoint: url,
-      };
-      fetchData(requestConfig);
-    },
-    [fetchData]
-  );
-
-  useEffect(() => {
-    let ids: string[] = [];
-
-    productCtx.cartProducts.length &&
-      productCtx.cartProducts.map((product) => {
-        ids.push(product.id);
-        return null;
-      });
-
-    const param = ids.length ? ids.join(",") : "";
-
-    getCartProducts(param);
-  }, [productCtx.cartProducts, getCartProducts]);
 
   let body;
 
-  let price = 0;
-
-  if (isLoading) {
+  if (productCtx.isLoading) {
     body = (
       <div className="flex flex-col lg:flex-row lg:space-x-8 w-full h-full">
         <Skeleton
@@ -60,46 +27,43 @@ const Cart = () => {
         />
       </div>
     );
-  } else if (error) {
-    body = <p className="flex w-full text-red tex-xs">{error}</p>;
-  } else if (!data || (data && !data.length)) {
+  } else if (productCtx.error) {
     body = (
-      <div className="flex w-full h-full ">
-        <div className="flex flex-col space-y-5 w-full h-40 bg-white rounded-md shadow-md items-center justify-center">
-          <p>Your Cart is Empty !</p>
-          <Link to="/" className="text-orange-500">
-            {" "}
-            Add items
-          </Link>
-        </div>
-      </div>
+      <p className="flex w-full text-red tex-xs text-red-500">
+        {productCtx.error}
+      </p>
     );
+  } else if (!productCtx.products.length) {
+    body = emptyCartHtml();
   } else {
-    data.map((product: productTypes) => {
-      const qty =
-        productCtx.cartProducts.find(
-          (cartProduct) => cartProduct.id === product._id
-        )?.quantity || 0;
-
-      price = price + product.price * qty;
-
-      return null;
-    });
-
     body = (
       <div className="flex flex-col w-full h-full space-y-2">
-        {data.map((product: productTypes) => (
+        {productCtx.products.map((product: savedProducts) => (
           <CartCard key={product._id} product={product} />
         ))}
       </div>
     );
   }
 
-  const items = productCtx.cartProducts.length;
+  const priceCalculator = (product: savedProducts[]) => {
+    let price = 0;
+
+    product.map((product) => {
+      price = price + product.quantity * product.price;
+
+      return null;
+    });
+
+    return price;
+  };
+
+  const totalPrice = priceCalculator(productCtx.products);
+
+  const items = productCtx.products.length;
 
   return (
-    <div className="flex  flex-col  w-full h-full   px-8">
-      <h2 className="sticky top-28 lg:top-20 border py-2 px-2 z-20 flex w-full bg-white  font-bold">
+    <div className="flex  flex-col  w-full h-full   px-8 ">
+      <h2 className="sticky top-[6.9rem]  md:top-[4.5rem]  border py-2 px-2 z-20 flex w-full bg-white  font-bold">
         CART
       </h2>
       <div className="flex flex-col   space-y-1 lg:flex-row lg:space-x-5 lg:space-y-0 w-full h-full ">
@@ -116,14 +80,14 @@ const Cart = () => {
                 <span>
                   Price {"( " + items + (items ? " items" : " item") + " ) :"}
                 </span>
-                <span>: ₹ {price.toLocaleString()}</span>
+                <span>: ₹ {totalPrice}</span>
 
                 <p>Delivery</p>
 
                 <p className=" text-green-500">: Free</p>
 
                 <p className="font-bold">Total</p>
-                <p className="font-bold">: ₹ {price.toLocaleString()}</p>
+                <p className="font-bold">: ₹ {totalPrice}</p>
               </div>
 
               <div className="flex w-full justify-center sm:justify-start lg:justify-center">
@@ -142,3 +106,16 @@ const Cart = () => {
 };
 
 export default Cart;
+
+const emptyCartHtml = () => {
+  return (
+    <div className="flex w-full h-full ">
+      <div className="flex flex-col space-y-5 w-full h-40 bg-white rounded-md shadow-md items-center justify-center">
+        <p>Your Cart is Empty !</p>
+        <Link to="/" className="text-orange-500">
+          Add items
+        </Link>
+      </div>
+    </div>
+  );
+};

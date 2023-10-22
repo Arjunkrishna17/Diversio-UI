@@ -1,34 +1,113 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useCallback,
+} from "react";
 
 import { CART } from "../Config/LocStorage";
 import { savedProducts } from "../Components/Constants/Types";
+import { AuthContext } from "./Auth";
+import useFetchNew from "../Hooks/useFetchNew";
+import { CART_PRODUCTS } from "../Config/ProductsAPIs";
+import { ERROR_MSG } from "../Config/Constants";
 
 interface productCtx {
   children: React.ReactNode;
 }
 
 interface productInitial {
-  cartProducts: savedProducts[] | [];
-  addProduct: (id: string, addBy?: number) => void;
+  products: savedProducts[] | [];
+  addProduct: (product: savedProducts, addBy?: number) => void;
   subtractQty: (id: string) => void;
   removeProduct: (id: string) => void;
+  getProducts: () => void;
+  error: string;
+  isLoading: boolean;
 }
 
 export const ProductContext = createContext<productInitial>({
-  cartProducts: [],
-  addProduct: (id: string, addBy?: number) => {},
+  products: [],
+  addProduct: (product: savedProducts, addBy?: number) => {},
   subtractQty: (id: string) => {},
   removeProduct: (id: string) => {},
+  getProducts: () => {},
+  error: "",
+  isLoading: false,
 });
 
+let isInitialRender = true;
+
 export const ProductProvider = ({ children }: productCtx) => {
-  const [cartProducts, setCartProducts] = useState<savedProducts[]>([]);
+  const authCtx = useContext(AuthContext);
+
+  const [tempCartProducts, setTempCartProducts] = useState<savedProducts[]>([]);
+
+  const [isLoading, setIsLoading] = useState(authCtx.loggedIn ? true : false);
+  const [error, setError] = useState("");
+  const [products, setProducts] = useState<savedProducts[]>(tempCartProducts);
+
+  const { httpRequest } = useFetchNew();
+
+  const getProducts = useCallback(async () => {
+    const requestConfig = {
+      endPoint: CART_PRODUCTS,
+    };
+
+    const response = await httpRequest(requestConfig);
+
+    if (response.success) {
+      //combine products only in initial render
+      if (isInitialRender) {
+        setProducts((existingProduct) => {
+          return [...existingProduct, ...response.data];
+        });
+
+        isInitialRender = false;
+      } else {
+        setProducts(response.data);
+      }
+    } else if (response.error) {
+      setError(response.error);
+    } else {
+      setError(ERROR_MSG);
+    }
+
+    setIsLoading(false);
+  }, [httpRequest]);
+
+  useEffect(() => {
+    if (authCtx.loggedIn) {
+      getProducts();
+    }
+  }, [authCtx.loggedIn, getProducts]);
+
+  const uploadCartProducts = useCallback(async () => {
+    const requestConfig = {
+      endPoint: CART_PRODUCTS,
+      method: "POST",
+      body: tempCartProducts,
+    };
+
+    const response = await httpRequest(requestConfig);
+
+    if (response.success) {
+      localStorage.removeItem(CART);
+    }
+  }, [httpRequest, tempCartProducts]);
+
+  useEffect(() => {
+    if (authCtx.loggedIn && tempCartProducts.length) {
+      uploadCartProducts();
+    }
+  }, [uploadCartProducts, authCtx.loggedIn, tempCartProducts.length]);
 
   const updateCart = () => {
     const products = localStorage.getItem(CART);
     if (products) {
       const parsedProducts = JSON.parse(products);
-      setCartProducts(parsedProducts);
+      setTempCartProducts(parsedProducts);
     }
   };
 
@@ -38,21 +117,21 @@ export const ProductProvider = ({ children }: productCtx) => {
   };
 
   const checkExistingProd = (productId: string) => {
-    const indexOfProduct = cartProducts.length
-      ? cartProducts.findIndex((product) => product.id === productId)
+    const indexOfProduct = tempCartProducts.length
+      ? tempCartProducts.findIndex((product) => product.productId === productId)
       : -1;
 
     return indexOfProduct;
   };
 
-  const addProduct = (selectedProductId: string, addBy = 1) => {
-    let newProducts = [...cartProducts];
+  const addProduct = (product: savedProducts, addBy = 1) => {
+    let newProducts = [...tempCartProducts];
 
-    const indexOfProduct = checkExistingProd(selectedProductId);
+    const indexOfProduct = checkExistingProd(product.productId);
     if (indexOfProduct !== -1) {
       newProducts[indexOfProduct].quantity += addBy;
     } else {
-      newProducts.push({ id: selectedProductId, quantity: addBy });
+      newProducts.push(product);
     }
 
     addToLocalStorage(JSON.stringify(newProducts));
@@ -60,7 +139,7 @@ export const ProductProvider = ({ children }: productCtx) => {
 
   const subtractQty = (selectedProductId: string) => {
     const indexOfProduct = checkExistingProd(selectedProductId);
-    let newProducts = [...cartProducts];
+    let newProducts = [...tempCartProducts];
 
     newProducts[indexOfProduct].quantity -= 1;
 
@@ -68,8 +147,8 @@ export const ProductProvider = ({ children }: productCtx) => {
   };
 
   const removeProduct = (selectedProductId: string) => {
-    const newProducts = cartProducts.filter(
-      (product) => product.id !== selectedProductId
+    const newProducts = tempCartProducts.filter(
+      (product) => product.productId !== selectedProductId
     );
 
     addToLocalStorage(JSON.stringify(newProducts));
@@ -80,10 +159,13 @@ export const ProductProvider = ({ children }: productCtx) => {
   }, []);
 
   const context = {
-    cartProducts: cartProducts,
+    products: authCtx.loggedIn ? products : tempCartProducts,
     addProduct: addProduct,
     subtractQty: subtractQty,
     removeProduct: removeProduct,
+    getProducts: getProducts,
+    error: error,
+    isLoading: isLoading,
   };
 
   return (

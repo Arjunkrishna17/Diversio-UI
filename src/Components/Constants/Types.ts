@@ -4,6 +4,10 @@ export interface useFetchDataType {
 }
 
 export interface savedProducts {
-  id: string;
+  _id?: string;
+  productName: string;
+  productId: string;
   quantity: number;
+  imageUrl: string;
+  price: number;
 }

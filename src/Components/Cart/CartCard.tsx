@@ -1,39 +1,95 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
-import { productTypes } from "../Dashboard/Products/Types";
 import { ProductContext } from "../../Context/Product";
 import DetailsOnHover from "../Packages/DetailsOnHover";
+import { savedProducts } from "../Constants/Types";
+import { AuthContext } from "../../Context/Auth";
+import useFetchNew from "../../Hooks/useFetchNew";
+import { CART_PRODUCTS } from "../../Config/ProductsAPIs";
+import { ERROR_MSG } from "../../Config/Constants";
 
 interface cartCardProps {
-  product: productTypes;
+  product: savedProducts;
 }
 
 const CartCard = ({ product }: cartCardProps) => {
+  const [error, setError] = useState("");
+
   const productCtx = useContext(ProductContext);
-  let count = 0;
+  const authCtx = useContext(AuthContext);
+  const { httpRequest } = useFetchNew();
 
-  if (productCtx.cartProducts.length) {
-    const products = productCtx.cartProducts.find(
-      (cartProduct) => cartProduct.id === product._id
-    );
+  let count = product ? product.quantity : 0;
 
-    count = products?.quantity || 0;
-  }
+  const deleteProduct = async (id: string) => {
+    const requestConfig = {
+      endPoint: CART_PRODUCTS + "?product-id=" + id,
+      method: "DELETE",
+    };
+
+    const response = await httpRequest(requestConfig);
+    if (response.success) {
+      productCtx.getProducts();
+      setError("");
+    } else if (response.error) {
+      setError(response.error);
+    } else {
+      setError(ERROR_MSG);
+    }
+  };
+
+  const updateQty = async (isAdd: boolean) => {
+    const oldProductData = { ...product };
+
+    if (isAdd) {
+      oldProductData.quantity = oldProductData.quantity + 1;
+    } else {
+      oldProductData.quantity = oldProductData.quantity - 1;
+    }
+
+    const requestConfig = {
+      endPoint: CART_PRODUCTS,
+      method: "PUT",
+      body: oldProductData,
+    };
+
+    const response = await httpRequest(requestConfig);
+    if (response.success) {
+      productCtx.getProducts();
+      setError("");
+    } else if (response.error) {
+      setError(response.error);
+    } else {
+      setError(ERROR_MSG);
+    }
+  };
 
   const addQty = () => {
-    productCtx.addProduct(product._id);
+    if (authCtx.loggedIn) {
+      updateQty(true);
+    } else {
+      productCtx.addProduct(product);
+    }
   };
 
   const subtractQty = () => {
-    productCtx.subtractQty(product._id);
+    if (authCtx.loggedIn) {
+      updateQty(false);
+    } else {
+      productCtx.subtractQty(product.productId);
+    }
   };
 
   const deleteProducts = () => {
-    productCtx.removeProduct(product._id);
+    if (authCtx.loggedIn) {
+      deleteProduct(product._id as string);
+    } else {
+      productCtx.removeProduct(product.productId);
+    }
   };
 
   return (
-    <div className="flex relative w-full items-center px-5  bg-white border shadow-md h-48">
+    <div className="flex flex-col space-y-3 relative w-full justify-center  px-5  bg-white border shadow-md h-48">
       <button
         onClick={deleteProducts}
         className="absolute right-5 top-5 font-semi-bold"
@@ -42,11 +98,11 @@ const CartCard = ({ product }: cartCardProps) => {
       </button>
 
       <div className="flex space-x-5 px-5">
-        <img className="w-36 h-36" src={product.images[0]} alt="product" />
+        <img className="w-36 h-36" src={product.imageUrl} alt="product" />
         <div className="flex flex-col space-y-6 w-full h-full px-5">
           <div className="relative cursor-default">
-            <h4 className="line-clamp-2 peer">{product.title}</h4>
-            <DetailsOnHover text={product.title} />
+            <h4 className="line-clamp-2 peer">{product.productName}</h4>
+            <DetailsOnHover text={product.productName} />
           </div>
 
           <div className="flex font-bold">
@@ -80,6 +136,8 @@ const CartCard = ({ product }: cartCardProps) => {
           </div>
         </div>
       </div>
+
+      {error && <p className="flex w-full text-red-500 text-xs">{error}</p>}
     </div>
   );
 };
