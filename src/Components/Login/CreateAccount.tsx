@@ -57,7 +57,7 @@ const CreateAccount = () => {
   };
 
   const validation = Yup.object().shape({
-    user: Yup.string().required("Please Enter your name"),
+    user: Yup.string().required("Please enter your name"),
     mobileNumber: Yup.string()
       .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
       .required("Please enter your mobile number"),
@@ -94,7 +94,10 @@ const CreateAccount = () => {
 
         <div className="flex flex-col space-y-5">
           {inputs.map((inputData) => (
-            <div className="flex flex-col  space-y-1  text-xs ">
+            <div
+              key={inputData.inputName}
+              className="flex flex-col  space-y-1  text-xs "
+            >
               <h6 className="text-sm">{inputData.name}</h6>
               <input
                 type={inputData.type}
