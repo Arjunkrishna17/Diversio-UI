@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
 import Skeleton from "react-loading-skeleton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import CartCard from "./CartCard";
 import { ProductContext } from "../../Context/Product";
 
 import Button from "../Packages/Button";
 import { savedProducts } from "../Constants/Types";
+import { CHECKOUT } from "../../Config/ProductRoutes";
 
 const Cart = () => {
   const productCtx = useContext(ProductContext);
+  const navigate = useNavigate();
 
   let body;
 
@@ -93,7 +95,7 @@ const Cart = () => {
               <div className="flex w-full justify-center sm:justify-start lg:justify-center">
                 <Button
                   text="PLACE ORDER"
-                  callback={() => {}}
+                  callback={() => navigate(CHECKOUT)}
                   type={"primary"}
                 />
               </div>

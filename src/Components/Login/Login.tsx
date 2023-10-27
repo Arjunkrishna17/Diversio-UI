@@ -88,7 +88,10 @@ const Login = () => {
 
           <div className="flex flex-col space-y-5">
             {inputs.map((inputData) => (
-              <div className="flex flex-col  space-y-1   ">
+              <div
+                key={inputData.inputName}
+                className="flex flex-col  space-y-1   "
+              >
                 <h6 className="text-sm">{inputData.name}</h6>
                 <Input
                   name={inputData.inputName}
