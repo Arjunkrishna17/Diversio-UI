@@ -8,9 +8,12 @@ import Input from "../Packages/Input";
 import Button from "../Packages/Button";
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Context/Auth";
-import { LOGIN_API } from "../../Config/CommonAPIs";
-import { HOME } from "../../Config/ProductRoutes";
-import { CREATE_ACCOUNT, LOGIN } from "../../Config/commonEndpoints";
+import { LOGIN_API } from "../../Config/Apis/CommonAPIs";
+import { HOME } from "../../Config/RoutePoints/ProductRoutes";
+import {
+  CREATE_ACCOUNT,
+  LOGIN,
+} from "../../Config/RoutePoints/commonEndpoints";
 import CreateAccount from "./CreateAccount";
 import EnterHandler from "../Packages/EnterHandler";
 

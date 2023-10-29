@@ -9,7 +9,7 @@ import Skeleton from "react-loading-skeleton";
 
 import useFetchNew from "../../../Hooks/useFetchNew";
 import { ERROR_MSG } from "../../../Config/Constants";
-import { ADDRESS_API } from "../../../Config/ProductsAPIs";
+import { ADDRESS_API } from "../../../Config/Apis/ProductsAPIs";
 import AddAddress from "./AddAddress";
 import Button from "../../Packages/Button";
 import { ReactComponent as Tick } from "../../../Images/Tick.svg";
@@ -206,22 +206,7 @@ const Address = ({ callback }: props) => {
     );
   }
 
-  return (
-    <div className="flex flex-col space-y-5 h-full  px-10">
-      <div className="flex items-center h-16 border-b w-full ">
-        <button
-          onClick={() => setShowAddress(true)}
-          className="px-5 font-bold "
-        >
-          Your Address
-        </button>
-
-        {!showAddress && <Tick className="w-5 h-5 fill-green-600" />}
-      </div>
-
-      {showAddress && body}
-    </div>
-  );
+  return body;
 };
 
 export default Address;

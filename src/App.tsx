@@ -6,8 +6,12 @@ import Electronics from "./Components/Dashboard/Products/Electronics";
 import ProductPage from "./Components/productPage/ProductPage";
 import Cart from "./Components/Cart/Cart";
 import Login from "./Components/Login/Login";
-import { CREATE_ACCOUNT, LOGIN } from "./Config/commonEndpoints";
-import { CHECKOUT, HOME, PRODUCT_PAGE } from "./Config/ProductRoutes";
+import { CREATE_ACCOUNT, LOGIN } from "./Config/RoutePoints/commonEndpoints";
+import {
+  CHECKOUT,
+  HOME,
+  PRODUCT_PAGE,
+} from "./Config/RoutePoints/ProductRoutes";
 import { CART } from "./Config/LocStorage";
 import { AuthContext } from "./Context/Auth";
 import Checkout from "./Components/Checkout/Checkout";

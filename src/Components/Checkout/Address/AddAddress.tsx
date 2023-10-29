@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 import Button from "../../Packages/Button";
-import { ADDRESS_API } from "../../../Config/ProductsAPIs";
+import { ADDRESS_API } from "../../../Config/Apis/ProductsAPIs";
 import useFetchNew from "../../../Hooks/useFetchNew";
 import { ERROR_MSG } from "../../../Config/Constants";
 import { address } from "../Type";

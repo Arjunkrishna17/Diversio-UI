@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { useFetchDataType } from "../Constants/Types";
 import useGetFetch from "../../Hooks/useGetFetch";
-import { GET_PRODUCTS } from "../../Config/ProductsAPIs";
+import { GET_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
 import { productTypes } from "../Dashboard/Products/Types";
 import Button from "../Packages/Button";
 import Details from "./Details";

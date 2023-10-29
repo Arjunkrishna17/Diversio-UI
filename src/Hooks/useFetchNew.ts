@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react";
-import { BASE_URL } from "../Config/ProductsAPIs";
+import { BASE_URL } from "../Config/Apis/ProductsAPIs";
 import { AuthContext } from "../Context/Auth";
 
 interface requestConfig {

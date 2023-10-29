@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BASE_URL } from "../Config/ProductsAPIs";
+import { BASE_URL } from "../Config/Apis/ProductsAPIs";
 
 const useGetFetch = (endPoint: string) => {
   const [data, setData] = useState<any>(undefined);

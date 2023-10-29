@@ -7,7 +7,7 @@ import { ProductContext } from "../../Context/Product";
 
 import Button from "../Packages/Button";
 import { savedProducts } from "../Constants/Types";
-import { CHECKOUT } from "../../Config/ProductRoutes";
+import { CHECKOUT } from "../../Config/RoutePoints/ProductRoutes";
 
 const Cart = () => {
   const productCtx = useContext(ProductContext);

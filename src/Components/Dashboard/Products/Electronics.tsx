@@ -7,7 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import useGetFetch from "../../../Hooks/useGetFetch";
-import { GET_PRODUCTS } from "../../../Config/ProductsAPIs";
+import { GET_PRODUCTS } from "../../../Config/Apis/ProductsAPIs";
 import ProductCard from "./ProductCard";
 import { productTypes } from "./Types";
 import { useFetchDataType } from "../../Constants/Types";
