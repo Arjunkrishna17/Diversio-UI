@@ -1,20 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-
-import useFetchNew from "../../../Hooks/useFetchNew";
-import { ERROR_MSG } from "../../../Config/Constants";
-import { GET_PAYMENT_INTENT } from "../../../Config/Apis/Orders";
-import { ReactComponent as Tick } from "../../../Images/Tick.svg";
 import Card from "./Card";
 import Button from "../../Packages/Button";
 
 const stripePromise = loadStripe(
-  "pk_test_51NGLouSGajw4zsaMLdnylQSJO1kz9gxBpBqaYd2k4UYWR9mO470bjzwYPLOFxW3QEnFzzU1yNshDg2k0rojHcKeU00jUpVcFIJ"
+  process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string
 );
 
 interface props {
-  orderId: string;
+  clientSecret: { clientSecret: string; amount: number };
 }
 
 const enum PAYMENT_TYPE {
@@ -22,35 +17,14 @@ const enum PAYMENT_TYPE {
   COD,
 }
 
-const Payment = ({ orderId }: props) => {
-  const [clientSecret, setClientSecret] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [showPaymentType, setPaymentType] = useState<PAYMENT_TYPE>();
-
-  const [error, setError] = useState("");
-
-  const { httpRequest } = useFetchNew();
+const Payment = ({ clientSecret }: props) => {
+  const [showPaymentType, setPaymentType] = useState<PAYMENT_TYPE>(
+    PAYMENT_TYPE.CARD
+  );
 
   const options = {
-    clientSecret:
-      "pi_3O6P3KSGajw4zsaM0jVAHIj0_secret_M2v1O7mzMybgjMQgQ933Lbqmp",
+    clientSecret: clientSecret.clientSecret,
     theme: "stripe",
-  };
-
-  const getClient = async () => {
-    const requestConfig = {
-      endPoint: GET_PAYMENT_INTENT + "?orderId=" + orderId,
-    };
-
-    const response = await httpRequest(requestConfig);
-
-    if (response.success) {
-      setClientSecret(response.data.clientSecret);
-    } else if (response.error) {
-      setError(response.error);
-    } else {
-      setError(ERROR_MSG);
-    }
   };
 
   return (
@@ -72,7 +46,7 @@ const Payment = ({ orderId }: props) => {
 
         {showPaymentType === PAYMENT_TYPE.CARD && (
           <Elements stripe={stripePromise} options={options}>
-            <Card />
+            <Card amount={clientSecret.amount} />
           </Elements>
         )}
       </div>

@@ -11,3 +11,8 @@ export interface address {
   state: string;
   default: boolean;
 }
+
+export interface paymentCreationResponse {
+  clientSecret: string;
+  amount: number;
+}

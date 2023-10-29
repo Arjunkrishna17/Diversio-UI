@@ -45,7 +45,13 @@ const useFetchNew = () => {
           ...body,
         });
 
-        const jsonData = await response.json();
+        const contentType = response.headers.get("Content-Type");
+
+        let jsonData;
+
+        if (contentType && contentType.includes("application/json")) {
+          jsonData = await response.json();
+        }
 
         if (response.ok) {
           data = jsonData;

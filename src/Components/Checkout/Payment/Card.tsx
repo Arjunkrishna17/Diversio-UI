@@ -7,8 +7,14 @@ import {
 
 import { ReactComponent as Loading } from "../../../Images/Spinner.svg";
 import { STRIPE_CONFIRM_RETURN_URL } from "../../../Config/RoutePoints/Orders";
+import { ReactComponent as Rupees } from "../../../Images/Rupees.svg";
+import { CS } from "../../../Config/LocStorage";
 
-const Card = () => {
+interface props {
+  amount: number;
+}
+
+const Card = ({ amount }: props) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +34,7 @@ const Card = () => {
         return_url: STRIPE_CONFIRM_RETURN_URL,
       },
     });
-
+    console.log(response);
     if (
       response.error.type === "card_error" ||
       response.error.type === "validation_error" ||
@@ -58,12 +64,18 @@ const Card = () => {
               {isLoading ? (
                 <Loading className="w-4 h-4 animate-spin" />
               ) : (
-                <span className="flex space-x-2 items-center text-sm">
-                  Pay $240
-                </span>
+                <div className="flex flex-wrap space-x-1 items-center text-sm">
+                  <p>Pay</p>
+                  <div className="flex items-center">
+                    <Rupees className="w-3 h-3 fill-white stroke-white" />
+                    <span>{amount.toLocaleString()}</span>
+                  </div>
+                </div>
               )}
             </button>
           </div>
+
+          {error && <p className="text-red-500 text-xs">{error}</p>}
         </div>
       </div>
     </form>

@@ -12,21 +12,23 @@ import { ERROR_MSG } from "../../../Config/Constants";
 import { ADDRESS_API } from "../../../Config/Apis/ProductsAPIs";
 import AddAddress from "./AddAddress";
 import Button from "../../Packages/Button";
-import { ReactComponent as Tick } from "../../../Images/Tick.svg";
 import { address } from "../Type";
+import { UPDATE_ORDER_ADDRESS_API } from "../../../Config/Apis/Orders";
 
 interface props {
-  callback: (addressId: string) => void;
+  callback: () => void;
+  orderId: string;
 }
 
-const Address = ({ callback }: props) => {
+const Address = ({ callback, orderId }: props) => {
   const [address, setAddress] = useState<address[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [showAddAddress, setShowAddAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<address>();
-  const [showAddress, setShowAddress] = useState(true);
   const [editAddress, setEditAddress] = useState<address>();
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const [errorOnAddAddress, setErrorOnAddAddress] = useState("");
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -67,17 +69,37 @@ const Address = ({ callback }: props) => {
     getAddress();
   }, [getAddress]);
 
-  const addAddressCallback = (address: address, showAddress: boolean) => {
+  const addAddress = async (selectedAddress: address) => {
+    const requestConfig = {
+      endPoint: UPDATE_ORDER_ADDRESS_API + "?orderId=" + orderId,
+      method: "POST",
+      body: { address: selectedAddress },
+    };
+
+    const response = await httpRequest(requestConfig);
+
+    if (response.success) {
+      callback();
+    } else if (response.error) {
+      setErrorOnAddAddress(response.error);
+    } else {
+      setErrorOnAddAddress(ERROR_MSG);
+    }
+
+    setButtonLoading(false);
+  };
+
+  const addAddressCallback = (addedAddress: address, showAddress: boolean) => {
     setShowAddAddress(false);
     getAddress(false);
     setEditAddress(undefined);
-    setSelectedAddress(address);
-    setShowAddress(showAddress);
+    setSelectedAddress(addedAddress);
+    addAddress(addedAddress);
   };
 
-  const addressButtonHandler = () => {
-    setShowAddress(false);
-    if (selectedAddress) callback(selectedAddress._id);
+  const addressButtonHandler = async () => {
+    setButtonLoading(true);
+    addAddress(selectedAddress as address);
   };
 
   const onChangeAddress = (address: address) => {
@@ -105,7 +127,7 @@ const Address = ({ callback }: props) => {
     body = (
       <div className="flex flex-col space-y-5 pb-5">
         {address.length &&
-          address.map((value: address) => (
+          address.map((value: address, i) => (
             <div key={value._id} className="flex px-5">
               <div
                 onClick={() => onChangeAddress(value)}
@@ -199,8 +221,13 @@ const Address = ({ callback }: props) => {
               text="Use this Address"
               callback={addressButtonHandler}
               type="primary"
+              isLoading={buttonLoading}
             />
           </div>
+        )}
+
+        {errorOnAddAddress && (
+          <p className="text-xs text-red-500 px-5">{errorOnAddAddress}</p>
         )}
       </div>
     );
