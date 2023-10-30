@@ -154,8 +154,7 @@ const OrderSuccess = () => {
           </span>
         </div>
 
-        {statusIcons[status as keyof typeof statusIcons].status !==
-          "Success" && <p className="opacity-60">Order ID: {orderId}</p>}
+        <p className="opacity-60">Order ID: {orderId}</p>
 
         <Button
           text="Continue Shopping"

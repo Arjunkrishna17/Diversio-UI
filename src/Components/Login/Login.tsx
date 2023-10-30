@@ -9,13 +9,10 @@ import Button from "../Packages/Button";
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Context/Auth";
 import { LOGIN_API } from "../../Config/Apis/CommonAPIs";
-import { HOME } from "../../Config/RoutePoints/ProductRoutes";
-import {
-  CREATE_ACCOUNT,
-  LOGIN,
-} from "../../Config/RoutePoints/commonEndpoints";
+import { CREATE_ACCOUNT } from "../../Config/RoutePoints/commonEndpoints";
 import CreateAccount from "./CreateAccount";
 import EnterHandler from "../Packages/EnterHandler";
+
 
 interface loginValues {
   username: string;
@@ -34,6 +31,8 @@ const Login = () => {
 
   const authContext = useContext(AuthContext);
 
+  console.log(location.state);
+
   const signIn = async (values: loginValues) => {
     const requestConfig = {
       endPoint: LOGIN_API,
@@ -46,11 +45,16 @@ const Login = () => {
     if (response.data) {
       authContext.loginHandler(response.data);
 
-      //In initial login user will be redirected to home page not when token expired
-
-      if (location.pathname === LOGIN) {
-        navigate(HOME);
+      //If redirect is true, need to take back to the prev user url
+      if (location.state && location.state.redirect) {
+        navigate(-1);
       }
+
+      // if (location.pathname === LOGIN) {
+      //   //In initial login user will be redirected to home page not when token expired
+
+      //   navigate(HOME);
+      // }
     }
   };
 
