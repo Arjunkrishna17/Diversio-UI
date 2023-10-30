@@ -8,13 +8,13 @@ import {
 import { ReactComponent as Loading } from "../../../Images/Spinner.svg";
 import { STRIPE_CONFIRM_RETURN_URL } from "../../../Config/RoutePoints/Orders";
 import { ReactComponent as Rupees } from "../../../Images/Rupees.svg";
-import { CS } from "../../../Config/LocStorage";
 
 interface props {
   amount: number;
+  orderId: string;
 }
 
-const Card = ({ amount }: props) => {
+const Card = ({ amount, orderId }: props) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,10 +31,10 @@ const Card = ({ amount }: props) => {
     const response = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: STRIPE_CONFIRM_RETURN_URL,
+        return_url: STRIPE_CONFIRM_RETURN_URL + "?orderId=" + orderId,
       },
     });
-    console.log(response);
+  
     if (
       response.error.type === "card_error" ||
       response.error.type === "validation_error" ||

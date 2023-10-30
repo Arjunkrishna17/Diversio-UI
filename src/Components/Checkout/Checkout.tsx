@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Address from "./Address/Address";
 import Payment from "./Payment/Payment";
 import { ReactComponent as Tick } from "../../Images/Tick.svg";
 import TotalAmount from "../Cart/TotalAmount";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { CART_ROUTE, HOME } from "../../Config/RoutePoints/ProductRoutes";
 import useFetchNew from "../../Hooks/useFetchNew";
 import { ERROR_MSG } from "../../Config/Constants";
@@ -107,8 +107,6 @@ const Checkout = () => {
     setAddressSelected(false);
   };
 
-  console.log(order);
-
   let body;
 
   if (isLoading) {
@@ -167,7 +165,10 @@ const Checkout = () => {
               </button>
             </div>
             {showMenu === MENU_TYPE.PAYMENT && clientSecret && (
-              <Payment clientSecret={clientSecret} />
+              <Payment
+                clientSecret={clientSecret}
+                orderId={orderId as string}
+              />
             )}
           </div>
         </div>

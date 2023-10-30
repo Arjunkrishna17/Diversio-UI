@@ -15,6 +15,8 @@ import {
 import { CART } from "./Config/LocStorage";
 import { AuthContext } from "./Context/Auth";
 import Checkout from "./Components/Checkout/Checkout";
+import { ORDER_SUCCESS_PAGE } from "./Config/RoutePoints/Orders";
+import OrderSuccess from "./Components/Checkout/OrderSuccess";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -34,6 +36,10 @@ const App = () => {
             <Route
               path={CHECKOUT}
               element={authCtx.loggedIn ? <Checkout /> : <Login />}
+            />
+            <Route
+              path={ORDER_SUCCESS_PAGE}
+              element={authCtx.loggedIn ? <OrderSuccess /> : <Login />}
             />
           </Routes>
         </div>

@@ -1,5 +1,6 @@
-import { BASE_URL } from "../Apis/ProductsAPIs";
 
-export const STRIPE_REDIRECT_URL = "/order/status";
 
-export const STRIPE_CONFIRM_RETURN_URL = BASE_URL + STRIPE_REDIRECT_URL;
+export const ORDER_SUCCESS_PAGE = "/order/status";
+
+export const STRIPE_CONFIRM_RETURN_URL =
+  process.env.REACT_APP_UI_BASE_URL + ORDER_SUCCESS_PAGE;

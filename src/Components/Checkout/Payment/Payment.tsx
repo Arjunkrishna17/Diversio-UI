@@ -3,6 +3,10 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Card from "./Card";
 import Button from "../../Packages/Button";
+import useFetchNew from "../../../Hooks/useFetchNew";
+import { COD_PAYMENT_API } from "../../../Config/Apis/Orders";
+import { useNavigate } from "react-router-dom";
+import { ORDER_SUCCESS_PAGE } from "../../../Config/RoutePoints/Orders";
 
 const stripePromise = loadStripe(
   process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string
@@ -10,6 +14,7 @@ const stripePromise = loadStripe(
 
 interface props {
   clientSecret: { clientSecret: string; amount: number };
+  orderId: string;
 }
 
 const enum PAYMENT_TYPE {
@@ -17,14 +22,39 @@ const enum PAYMENT_TYPE {
   COD,
 }
 
-const Payment = ({ clientSecret }: props) => {
+const Payment = ({ clientSecret, orderId }: props) => {
   const [showPaymentType, setPaymentType] = useState<PAYMENT_TYPE>(
     PAYMENT_TYPE.CARD
   );
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { httpRequest } = useFetchNew();
+  const navigate = useNavigate();
 
   const options = {
     clientSecret: clientSecret.clientSecret,
     theme: "stripe",
+  };
+
+  const codConfirmPayment = async () => {
+    const requestConfig = {
+      endPoint: COD_PAYMENT_API + "?orderId=" + orderId,
+    };
+
+    setIsLoading(true);
+
+    const response = await httpRequest(requestConfig);
+
+    if (response.success) {
+      navigate(ORDER_SUCCESS_PAGE + "?orderId=" + orderId, { replace: true });
+    } else if (response.error) {
+      setError(response.error);
+    } else {
+      setError(response.error);
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -46,7 +76,7 @@ const Payment = ({ clientSecret }: props) => {
 
         {showPaymentType === PAYMENT_TYPE.CARD && (
           <Elements stripe={stripePromise} options={options}>
-            <Card amount={clientSecret.amount} />
+            <Card amount={clientSecret.amount} orderId={orderId} />
           </Elements>
         )}
       </div>
@@ -68,9 +98,16 @@ const Payment = ({ clientSecret }: props) => {
 
         {showPaymentType === PAYMENT_TYPE.COD && (
           <div className="px-9">
-            <Button text="Confirm Order" type="primary" callback={() => {}} />
+            <Button
+              isLoading={isLoading}
+              text="Confirm Order"
+              type="primary"
+              callback={() => codConfirmPayment()}
+            />
           </div>
         )}
+
+        {error && <p className="text-red-500 text-xs px-10">{error}</p>}
       </div>
     </div>
   );
