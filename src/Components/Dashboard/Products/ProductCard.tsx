@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { productTypes } from "./Types";
-import { PRODUCT_PAGE } from "../../../Config/ProductRoutes";
+import { PRODUCT_PAGE } from "../../../Config/RoutePoints/ProductRoutes";
 
 interface productCardProps {
   product: productTypes;

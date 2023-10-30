@@ -6,7 +6,7 @@ import { ProductContext } from "../../Context/Product";
 import { AuthContext } from "../../Context/Auth";
 import useFetchNew from "../../Hooks/useFetchNew";
 import { savedProducts } from "../Constants/Types";
-import { CART_PRODUCTS } from "../../Config/ProductsAPIs";
+import { CART_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
 
 interface addCartProps {
   product: productTypes;

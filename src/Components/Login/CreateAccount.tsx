@@ -4,12 +4,12 @@ import { useFormik } from "formik";
 
 import Button from "../Packages/Button";
 import useFetch from "../../Hooks/useFetch";
-import { CREATE_ACCOUNT } from "../../Config/CommonAPIs";
+import { CREATE_ACCOUNT } from "../../Config/Apis/CommonAPIs";
 import { AuthContext } from "../../Context/Auth";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../../Config/ProductRoutes";
+import { HOME } from "../../Config/RoutePoints/ProductRoutes";
 import EnterHandler from "../Packages/EnterHandler";
-import { LOGIN } from "../../Config/commonEndpoints";
+import { LOGIN } from "../../Config/RoutePoints/commonEndpoints";
 
 interface userInfo {
   user: string;

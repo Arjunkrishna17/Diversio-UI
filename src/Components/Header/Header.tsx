@@ -6,7 +6,10 @@ import Search from "./Search";
 import Button from "../Packages/Button";
 import ShoppingCart from "./ShoppingCart";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CREATE_ACCOUNT, LOGIN } from "../../Config/commonEndpoints";
+import {
+  CREATE_ACCOUNT,
+  LOGIN,
+} from "../../Config/RoutePoints/commonEndpoints";
 import { AuthContext } from "../../Context/Auth";
 
 const enum BUTTON_TYPE {

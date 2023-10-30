@@ -11,3 +11,8 @@ export interface savedProducts {
   imageUrl: string;
   price: number;
 }
+
+export interface orderProductsType {
+  productId: string;
+  quantity: number;
+}

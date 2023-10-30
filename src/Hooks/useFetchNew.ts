@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react";
-import { BASE_URL } from "../Config/ProductsAPIs";
+import { BASE_URL } from "../Config/Apis/ProductsAPIs";
 import { AuthContext } from "../Context/Auth";
 
 interface requestConfig {
@@ -45,7 +45,13 @@ const useFetchNew = () => {
           ...body,
         });
 
-        const jsonData = await response.json();
+        const contentType = response.headers.get("Content-Type");
+
+        let jsonData;
+
+        if (contentType && contentType.includes("application/json")) {
+          jsonData = await response.json();
+        }
 
         if (response.ok) {
           data = jsonData;

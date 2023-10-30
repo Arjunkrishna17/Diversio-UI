@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { BASE_URL } from "../Config/ProductsAPIs";
+import { BASE_URL } from "../Config/Apis/ProductsAPIs";
 
 interface requestConfig {
   endPoint: string;

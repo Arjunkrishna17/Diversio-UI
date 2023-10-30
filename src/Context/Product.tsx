@@ -10,7 +10,7 @@ import { CART } from "../Config/LocStorage";
 import { savedProducts } from "../Components/Constants/Types";
 import { AuthContext } from "./Auth";
 import useFetchNew from "../Hooks/useFetchNew";
-import { CART_PRODUCTS } from "../Config/ProductsAPIs";
+import { CART_PRODUCTS } from "../Config/Apis/ProductsAPIs";
 import { ERROR_MSG } from "../Config/Constants";
 
 interface productCtx {

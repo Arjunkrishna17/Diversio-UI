@@ -5,7 +5,7 @@ import DetailsOnHover from "../Packages/DetailsOnHover";
 import { savedProducts } from "../Constants/Types";
 import { AuthContext } from "../../Context/Auth";
 import useFetchNew from "../../Hooks/useFetchNew";
-import { CART_PRODUCTS } from "../../Config/ProductsAPIs";
+import { CART_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
 import { ERROR_MSG } from "../../Config/Constants";
 
 interface cartCardProps {

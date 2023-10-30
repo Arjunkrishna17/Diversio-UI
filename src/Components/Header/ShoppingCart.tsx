@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Bag } from "../../Images/Bag.svg";
 import { ProductContext } from "../../Context/Product";
-import { CART_ROUTE } from "../../Config/ProductRoutes";
+import { CART_ROUTE } from "../../Config/RoutePoints/ProductRoutes";
 
 const ShoppingCart = () => {
   const productCtx = useContext(ProductContext);

@@ -1,17 +1,15 @@
 import React, { useContext } from "react";
 import Skeleton from "react-loading-skeleton";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import CartCard from "./CartCard";
 import { ProductContext } from "../../Context/Product";
 
-import Button from "../Packages/Button";
 import { savedProducts } from "../Constants/Types";
-import { CHECKOUT } from "../../Config/ProductRoutes";
+import TotalAmount from "./TotalAmount";
 
 const Cart = () => {
   const productCtx = useContext(ProductContext);
-  const navigate = useNavigate();
 
   let body;
 
@@ -47,21 +45,11 @@ const Cart = () => {
     );
   }
 
-  const priceCalculator = (product: savedProducts[]) => {
-    let price = 0;
+  const items = productCtx.products;
 
-    product.map((product) => {
-      price = price + product.quantity * product.price;
-
-      return null;
-    });
-
-    return price;
-  };
-
-  const totalPrice = priceCalculator(productCtx.products);
-
-  const items = productCtx.products.length;
+  const products = items.map((product) => {
+    return { productId: product.productId, quantity: product.quantity };
+  });
 
   return (
     <div className="flex  flex-col  w-full h-full   px-8 ">
@@ -73,35 +61,7 @@ const Cart = () => {
           {body}
         </div>
 
-        {items ? (
-          <div className="w-full lg:w-1/2 h-full pt-3">
-            <div className="sticky top-28 flex flex-col space-y-8 w-full h-fit  bg-white border p-5">
-              <h3 className="font-bold text-sm">PRICE DETAILS</h3>
-
-              <div className="grid grid-cols-[200px_auto] lg:grid-cols-[200px_auto] gap-y-5">
-                <span>
-                  Price {"( " + items + (items ? " items" : " item") + " ) :"}
-                </span>
-                <span>: ₹ {totalPrice}</span>
-
-                <p>Delivery</p>
-
-                <p className=" text-green-500">: Free</p>
-
-                <p className="font-bold">Total</p>
-                <p className="font-bold">: ₹ {totalPrice}</p>
-              </div>
-
-              <div className="flex w-full justify-center sm:justify-start lg:justify-center">
-                <Button
-                  text="PLACE ORDER"
-                  callback={() => navigate(CHECKOUT)}
-                  type={"primary"}
-                />
-              </div>
-            </div>
-          </div>
-        ) : null}
+        <div className="flex">{items.length ? <TotalAmount products={products} /> : null}</div>
       </div>
     </div>
   );
