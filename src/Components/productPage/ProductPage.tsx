@@ -5,10 +5,10 @@ import { useFetchDataType } from "../Constants/Types";
 import useGetFetch from "../../Hooks/useGetFetch";
 import { GET_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
 import { productTypes } from "../Dashboard/Products/Types";
-import Button from "../Packages/Button";
 import Details from "./Details";
 import Skelton from "./Skelton";
 import AddCart from "./AddCart";
+import BuyNow from "./BuyNow";
 
 interface productFetch extends useFetchDataType {
   data: productTypes;
@@ -28,8 +28,6 @@ const ProductPage = () => {
   const { data, isLoading, error }: productFetch = useGetFetch(
     GET_PRODUCTS + productFilter
   );
-
-  const buyNowHandler = () => {};
 
   let body;
 
@@ -78,11 +76,7 @@ const ProductPage = () => {
 
                 <div className="flex w-full justify-center space-x-5 py-5">
                   <AddCart product={data} />
-                  <Button
-                    text="BUY NOW"
-                    type="primary"
-                    callback={buyNowHandler}
-                  />
+                  <BuyNow product={data} />
                 </div>
               </div>
             </div>

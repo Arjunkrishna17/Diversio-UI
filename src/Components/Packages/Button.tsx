@@ -18,6 +18,7 @@ const Button = ({ type, text, callback, isLoading }: buttonProps) => {
 
   return (
     <button
+      type="button"
       onClick={(e) => {
         e.preventDefault();
         callback();
