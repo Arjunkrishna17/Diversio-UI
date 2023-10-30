@@ -9,9 +9,10 @@ import Button from "../Packages/Button";
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Context/Auth";
 import { LOGIN_API } from "../../Config/Apis/CommonAPIs";
-import { CREATE_ACCOUNT } from "../../Config/RoutePoints/commonEndpoints";
+import { CREATE_ACCOUNT, LOGIN } from "../../Config/RoutePoints/commonEndpoints";
 import CreateAccount from "./CreateAccount";
 import EnterHandler from "../Packages/EnterHandler";
+import { HOME } from "../../Config/RoutePoints/ProductRoutes";
 
 
 interface loginValues {
@@ -50,11 +51,11 @@ const Login = () => {
         navigate(-1);
       }
 
-      // if (location.pathname === LOGIN) {
-      //   //In initial login user will be redirected to home page not when token expired
+      if (location.pathname === LOGIN) {
+        //In initial login user will be redirected to home page not when token expired
 
-      //   navigate(HOME);
-      // }
+        navigate(HOME);
+      }
     }
   };
 
