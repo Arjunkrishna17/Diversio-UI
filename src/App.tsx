@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./Components/Header/Header";
-import Electronics from "./Components/Dashboard/Products/Electronics";
+import ProductSection from "./Components/Dashboard/Products/ProductSection";
 import ProductPage from "./Components/productPage/ProductPage";
 import Cart from "./Components/Cart/Cart";
 import Login from "./Components/Login/Login";
@@ -11,12 +11,16 @@ import {
   CHECKOUT,
   HOME,
   PRODUCT_PAGE,
+  PRODUCT_SEARCH_ROUTE,
 } from "./Config/RoutePoints/ProductRoutes";
 import { CART } from "./Config/LocStorage";
 import { AuthContext } from "./Context/Auth";
 import Checkout from "./Components/Checkout/Checkout";
 import { ORDER_SUCCESS_PAGE } from "./Config/RoutePoints/Orders";
 import OrderSuccess from "./Components/Checkout/OrderSuccess";
+import NotFound from "./Utils/NotFound";
+import ProductSearch from "./Components/ProductSearch/ProductSearch";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -29,18 +33,28 @@ const App = () => {
         <div className="grow">
           <Routes>
             <Route path={LOGIN} element={<Login />} />
+
             <Route path={CREATE_ACCOUNT} element={<Login />} />
-            <Route path={HOME} element={<Electronics />} />
+
+            <Route path={HOME} element={<Dashboard />} />
+
             <Route path={PRODUCT_PAGE + "/:id"} element={<ProductPage />} />
+
             <Route path={CART} element={<Cart />} />
+
             <Route
               path={CHECKOUT}
               element={authCtx.loggedIn ? <Checkout /> : <Login />}
             />
+
             <Route
               path={ORDER_SUCCESS_PAGE}
               element={authCtx.loggedIn ? <OrderSuccess /> : <Login />}
             />
+
+            <Route path={PRODUCT_SEARCH_ROUTE} element={<ProductSearch />} />
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>

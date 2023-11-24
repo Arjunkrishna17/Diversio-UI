@@ -41,7 +41,7 @@ const Header = () => {
           <p className="text-lg md:text-xl font-bold font-poppins">Diversio</p>
         </a>
 
-        <div className="hidden md:flex w-full border justify-center">
+        <div className=" hidden md:flex w-full border justify-center">
           <Search />
         </div>
 

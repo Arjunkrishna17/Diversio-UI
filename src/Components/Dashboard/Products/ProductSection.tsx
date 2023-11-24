@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -6,19 +6,45 @@ import "./slick.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import useGetFetch from "../../../Hooks/useGetFetch";
 import { GET_PRODUCTS } from "../../../Config/Apis/ProductsAPIs";
-import ProductCard from "./ProductCard";
+import ProductCard from "../../Packages/ProductCard";
 import { productTypes } from "./Types";
-import { useFetchDataType } from "../../Constants/Types";
+import useFetchNew from "../../../Hooks/useFetchNew";
+import { ERROR_MSG } from "../../../Config/Constants";
 
-interface electronicDataFetch extends useFetchDataType {
-  data: productTypes[];
+interface props {
+  categoryFilter: string;
+  sectionName: string;
 }
 
-const Electronics = () => {
-  const { data, isLoading, error }: electronicDataFetch =
-    useGetFetch(GET_PRODUCTS);
+const ProductSection = ({ categoryFilter, sectionName }: props) => {
+  const [data, setData] = useState<productTypes[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const { httpRequest } = useFetchNew();
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const requestConfig = {
+        endPoint: GET_PRODUCTS + "?category=" + categoryFilter,
+      };
+
+      const response = await httpRequest(requestConfig);
+
+      if (response.success) {
+        setData(response.data.content);
+      } else if (response.error) {
+        setError(response.error);
+      } else {
+        setError(ERROR_MSG);
+      }
+
+      setIsLoading(false);
+    };
+
+    getProducts();
+  }, [httpRequest, categoryFilter]);
 
   const settings = {
     dots: true,
@@ -87,13 +113,13 @@ const Electronics = () => {
   }
 
   return (
-    <div className="flex flex-col w-full h-[24rem]  py-5 px-3">
-      <div className="grow w-full  bg-white border px-10 py-5">
-        <h3 className="font-bold">Electronics</h3>
+    <div className="flex flex-col w-full h-[21rem]  px-3 pt-3">
+      <div className="grow w-full  px-10 py-5 bg-white border">
+        <h3 className="font-bold">{sectionName}</h3>
         {content}
       </div>
     </div>
   );
 };
 
-export default Electronics;
+export default ProductSection;

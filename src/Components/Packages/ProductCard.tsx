@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { productTypes } from "./Types";
-import { PRODUCT_PAGE } from "../../../Config/RoutePoints/ProductRoutes";
+import { productTypes } from "../Dashboard/Products/Types";
+import { PRODUCT_PAGE } from "../../Config/RoutePoints/ProductRoutes";
+import { ReactComponent as Rupees } from "../../Images/Rupees.svg";
 
 interface productCardProps {
   product: productTypes;
@@ -19,13 +20,14 @@ const ProductCard = ({ product }: productCardProps) => {
     <div
       onClick={() => onClickHandler(product._id)}
       key={product.title}
-      className="flex  flex-col items-center h-72 space-y-5 py-5 px-5 cursor-pointer border rounded-lg shadow-lg my-5"
+      className="flex  flex-col items-center h-60 space-y-5 py-5 px-5 cursor-pointer border rounded-lg shadow-lg my-5 bg-white hover:bg-gray-100"
     >
-      <div className="flex justify-center items-center  h-36 py-5">
-        <img src={product.images[0]} alt="product" className="h-36 w-36 " />
+      <div className="flex justify-center items-center">
+        <img src={product.images[0]} alt="product" className="h-24 w-24 " />
       </div>
-      <div className="flex w-full justify-center space-x-1 text-sm font-semibold">
-        <span>Rs.</span>
+      <div className="flex w-full justify-center items-center space-x-1  font-bold">
+        <Rupees className="w-3 h-3 " />
+
         <span>{product.price.toLocaleString()}</span>
       </div>
       <div className="flex justify-center">

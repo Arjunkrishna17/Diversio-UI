@@ -68,6 +68,9 @@ const Checkout = () => {
   }, [httpRequest, orderId]);
 
   useEffect(() => {
+    //Remove old client secret
+    localStorage.removeItem(CS);
+
     const getClient = async () => {
       const requestConfig = {
         endPoint: GET_PAYMENT_INTENT + "?orderId=" + orderId,
