@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { productTypes } from "../Dashboard/Products/Types";
-import { PRODUCT_PAGE } from "../../Config/RoutePoints/ProductRoutes";
-import { ReactComponent as Rupees } from "../../Images/Rupees.svg";
+import { productTypes } from "./Types";
+import { PRODUCT_PAGE } from "../../Constants/RoutePoints/ProductRoutes";
+import { ReactComponent as Rupees } from "../../Assets/Images/Rupees.svg";
 
 interface productCardProps {
   product: productTypes;

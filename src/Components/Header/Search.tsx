@@ -2,14 +2,14 @@ import React, { useMemo, useState, useRef, useCallback } from "react";
 import { throttle } from "lodash";
 import { AutoComplete, Input } from "antd";
 
-import { ReactComponent as SearchIcon } from "../../Images/Search.svg";
+import { ReactComponent as SearchIcon } from "../../Assets/Images/Search.svg";
 import useFetchNew from "../../Hooks/useFetchNew";
-import { PRODUCT_SEARCH } from "../../Config/Apis/ProductsAPIs";
+import { PRODUCT_SEARCH } from "../../Constants/Apis/ProductsAPIs";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   CHECKOUT,
   PRODUCT_SEARCH_ROUTE,
-} from "../../Config/RoutePoints/ProductRoutes";
+} from "../../Constants/RoutePoints/ProductRoutes";
 
 interface options {
   value: string;

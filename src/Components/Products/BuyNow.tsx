@@ -2,15 +2,15 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useFetchNew from "../../Hooks/useFetchNew";
-import { ERROR_MSG } from "../../Config/Constants";
-import { ORDER_API } from "../../Config/Apis/Orders";
-import { CHECKOUT } from "../../Config/RoutePoints/ProductRoutes";
-import Button from "../Packages/Button";
-import { CART_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
-import { productTypes } from "../Dashboard/Products/Types";
+import { ERROR_MSG } from "../../Constants/Constants";
+import { ORDER_API } from "../../Constants/Apis/Orders";
+import { CHECKOUT } from "../../Constants/RoutePoints/ProductRoutes";
+import Button from "../Common/Button";
+import { CART_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
+import { productTypes } from "./Types";
 import { ProductContext } from "../../Context/Product";
 import { AuthContext } from "../../Context/Auth";
-import { LOGIN } from "../../Config/RoutePoints/commonEndpoints";
+import { LOGIN } from "../../Constants/RoutePoints/commonEndpoints";
 
 interface props {
   product: productTypes;

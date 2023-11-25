@@ -8,12 +8,12 @@ import React, {
 import Skeleton from "react-loading-skeleton";
 
 import useFetchNew from "../../../Hooks/useFetchNew";
-import { ERROR_MSG } from "../../../Config/Constants";
-import { ADDRESS_API } from "../../../Config/Apis/ProductsAPIs";
+import { ERROR_MSG } from "../../../Constants/Constants";
+import { ADDRESS_API } from "../../../Constants/Apis/ProductsAPIs";
 import AddAddress from "./AddAddress";
-import Button from "../../Packages/Button";
+import Button from "../../Common/Button";
 import { address } from "../Type";
-import { UPDATE_ORDER_ADDRESS_API } from "../../../Config/Apis/Orders";
+import { UPDATE_ORDER_ADDRESS_API } from "../../../Constants/Apis/Orders";
 
 interface props {
   callback: () => void;

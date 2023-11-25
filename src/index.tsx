@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "./Assets/Styles/index.css";
 import App from "./App";
 import { ProductProvider } from "./Context/Product";
 import { AuthProvider } from "./Context/Auth";

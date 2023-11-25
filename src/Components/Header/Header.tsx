@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 
-import { ReactComponent as Cart } from "../../Images/Cart.svg";
+import { ReactComponent as Cart } from "../../Assets/Images/Cart.svg";
 
 import Search from "./Search";
-import Button from "../Packages/Button";
+import Button from "../Common/Button";
 import ShoppingCart from "./ShoppingCart";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   CREATE_ACCOUNT,
   LOGIN,
-} from "../../Config/RoutePoints/commonEndpoints";
+} from "../../Constants/RoutePoints/commonEndpoints";
 import { AuthContext } from "../../Context/Auth";
 
 const enum BUTTON_TYPE {

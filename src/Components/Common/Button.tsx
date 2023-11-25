@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ReactComponent as Spinner } from "../../Images/Spinner.svg";
+import { ReactComponent as Spinner } from "../../Assets/Images/Spinner.svg";
 
 interface buttonProps {
   type: "primary" | "secondary";

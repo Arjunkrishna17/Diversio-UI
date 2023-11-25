@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import Address from "./Address/Address";
-import Payment from "./Payment/Payment";
-import { ReactComponent as Tick } from "../../Images/Tick.svg";
-import TotalAmount from "../Cart/TotalAmount";
-import { CART_ROUTE, HOME } from "../../Config/RoutePoints/ProductRoutes";
-import useFetchNew from "../../Hooks/useFetchNew";
-import { ERROR_MSG } from "../../Config/Constants";
-import { GET_PAYMENT_INTENT, ORDER_API } from "../../Config/Apis/Orders";
-import { orderProductsType } from "../Constants/Types";
+import Address from "../Components/Checkout/Address/Address";
+import Payment from "../Components/Checkout/Payment/Payment";
+import { ReactComponent as Tick } from "../Assets/Images/Tick.svg";
+import TotalAmount from "../Components/Cart/TotalAmount";
+import { CART_ROUTE, HOME } from "../Constants/RoutePoints/ProductRoutes";
+import useFetchNew from "../Hooks/useFetchNew";
+import { ERROR_MSG } from "../Constants/Constants";
+import { GET_PAYMENT_INTENT, ORDER_API } from "../Constants/Apis/Orders";
+import { orderProductsType } from "../Components/Types/Types";
 import Skeleton from "react-loading-skeleton";
-import { CS } from "../../Config/LocStorage";
-import Button from "../Packages/Button";
-import TestCard from "./Payment/TestCard";
+import { CS } from "../Config/LocStorage";
+import Button from "../Components/Common/Button";
+import TestCard from "../Components/Checkout/Payment/TestCard";
 
 const enum MENU_TYPE {
   ADDRESS,

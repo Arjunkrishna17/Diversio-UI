@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 
 import { ProductContext } from "../../Context/Product";
-import DetailsOnHover from "../Packages/DetailsOnHover";
-import { savedProducts } from "../Constants/Types";
+import DetailsOnHover from "../Common/DetailsOnHover";
+import { savedProducts } from "../Types/Types";
 import { AuthContext } from "../../Context/Auth";
 import useFetchNew from "../../Hooks/useFetchNew";
-import { CART_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
-import { ERROR_MSG } from "../../Config/Constants";
+import { CART_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
+import { ERROR_MSG } from "../../Constants/Constants";
 
 interface cartCardProps {
   product: savedProducts;
@@ -118,7 +118,7 @@ const CartCard = ({ product }: cartCardProps) => {
             >
               <img
                 className="w-5 h-5"
-                src={require("../../Images/Dash.svg").default}
+                src={require("../../Assets/Images/Dash.svg").default}
                 alt="plus"
               />
             </button>
@@ -129,7 +129,7 @@ const CartCard = ({ product }: cartCardProps) => {
             >
               <img
                 className="w-5 h-5"
-                src={require("../../Images/Plus.svg").default}
+                src={require("../../Assets/Images/Pending.svg").default}
                 alt="plus"
               />
             </button>

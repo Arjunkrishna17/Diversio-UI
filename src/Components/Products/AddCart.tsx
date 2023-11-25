@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 
-import Button from "../Packages/Button";
-import { productTypes } from "../Dashboard/Products/Types";
+import Button from "../Common/Button";
+import { productTypes } from "./Types";
 import { ProductContext } from "../../Context/Product";
 import { AuthContext } from "../../Context/Auth";
 import useFetchNew from "../../Hooks/useFetchNew";
-import { savedProducts } from "../Constants/Types";
-import { CART_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
+import { savedProducts } from "../Types/Types";
+import { CART_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
 
 interface addCartProps {
   product: productTypes;

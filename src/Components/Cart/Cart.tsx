@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CartCard from "./CartCard";
 import { ProductContext } from "../../Context/Product";
 
-import { savedProducts } from "../Constants/Types";
+import { savedProducts } from "../Types/Types";
 import TotalAmount from "./TotalAmount";
 
 const Cart = () => {
@@ -61,7 +61,9 @@ const Cart = () => {
           {body}
         </div>
 
-        <div className="flex">{items.length ? <TotalAmount products={products} /> : null}</div>
+        <div className="flex">
+          {items.length ? <TotalAmount products={products} /> : null}
+        </div>
       </div>
     </div>
   );

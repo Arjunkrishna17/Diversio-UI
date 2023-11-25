@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Card from "./Card";
-import Button from "../../Packages/Button";
+import Button from "../../Common/Button";
 import useFetchNew from "../../../Hooks/useFetchNew";
-import { COD_PAYMENT_API } from "../../../Config/Apis/Orders";
+import { COD_PAYMENT_API } from "../../../Constants/Apis/Orders";
 import { useNavigate } from "react-router-dom";
-import { ORDER_SUCCESS_PAGE } from "../../../Config/RoutePoints/Orders";
+import { ORDER_SUCCESS_PAGE } from "../../../Constants/RoutePoints/Orders";
 
 const stripePromise = loadStripe(
   process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string

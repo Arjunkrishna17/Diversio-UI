@@ -2,25 +2,25 @@ import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./Components/Header/Header";
-import ProductSection from "./Components/Dashboard/Products/ProductSection";
-import ProductPage from "./Components/productPage/ProductPage";
+import ProductSection from "./Components/Products/ProductSection";
+import ProductPage from "./Pages/ProductPage";
 import Cart from "./Components/Cart/Cart";
-import Login from "./Components/Login/Login";
-import { CREATE_ACCOUNT, LOGIN } from "./Config/RoutePoints/commonEndpoints";
+import Login from "./Pages/Login/Login";
+import { CREATE_ACCOUNT, LOGIN } from "./Constants/RoutePoints/commonEndpoints";
 import {
   CHECKOUT,
   HOME,
   PRODUCT_PAGE,
   PRODUCT_SEARCH_ROUTE,
-} from "./Config/RoutePoints/ProductRoutes";
+} from "./Constants/RoutePoints/ProductRoutes";
 import { CART } from "./Config/LocStorage";
 import { AuthContext } from "./Context/Auth";
-import Checkout from "./Components/Checkout/Checkout";
-import { ORDER_SUCCESS_PAGE } from "./Config/RoutePoints/Orders";
+import Checkout from "./Pages/Checkout";
+import { ORDER_SUCCESS_PAGE } from "./Constants/RoutePoints/Orders";
 import OrderSuccess from "./Components/Checkout/OrderSuccess";
 import NotFound from "./Utils/NotFound";
-import ProductSearch from "./Components/ProductSearch/ProductSearch";
-import Dashboard from "./Components/Dashboard/Dashboard";
+import ProductSearch from "./Components/Products/ProductSearch";
+import Dashboard from "./Pages/Dashboard";
 
 const App = () => {
   const authCtx = useContext(AuthContext);

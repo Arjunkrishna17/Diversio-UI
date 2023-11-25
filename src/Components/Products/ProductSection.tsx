@@ -6,11 +6,11 @@ import "./slick.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { GET_PRODUCTS } from "../../../Config/Apis/ProductsAPIs";
-import ProductCard from "../../Packages/ProductCard";
+import { GET_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
+import ProductCard from "./ProductCard";
 import { productTypes } from "./Types";
-import useFetchNew from "../../../Hooks/useFetchNew";
-import { ERROR_MSG } from "../../../Config/Constants";
+import useFetchNew from "../../Hooks/useFetchNew";
+import { ERROR_MSG } from "../../Constants/Constants";
 
 interface props {
   categoryFilter: string;

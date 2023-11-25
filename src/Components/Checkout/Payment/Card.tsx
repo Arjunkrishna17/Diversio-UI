@@ -5,9 +5,9 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
-import { ReactComponent as Loading } from "../../../Images/Spinner.svg";
-import { STRIPE_CONFIRM_RETURN_URL } from "../../../Config/RoutePoints/Orders";
-import { ReactComponent as Rupees } from "../../../Images/Rupees.svg";
+import { ReactComponent as Loading } from "../../../Assets/Images/Spinner.svg";
+import { STRIPE_CONFIRM_RETURN_URL } from "../../../Constants/RoutePoints/Orders";
+import { ReactComponent as Rupees } from "../../../Assets/Images/Rupees.svg";
 
 interface props {
   amount: number;
@@ -34,7 +34,7 @@ const Card = ({ amount, orderId }: props) => {
         return_url: STRIPE_CONFIRM_RETURN_URL + "?orderId=" + orderId,
       },
     });
-  
+
     if (
       response.error.type === "card_error" ||
       response.error.type === "validation_error" ||

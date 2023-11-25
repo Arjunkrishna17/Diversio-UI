@@ -1,5 +1,5 @@
 import React from "react";
-import ProductSection from "./Products/ProductSection";
+import ProductSection from "../Components/Products/ProductSection";
 
 const Dashboard = () => {
   return (

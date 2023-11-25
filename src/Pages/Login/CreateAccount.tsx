@@ -2,14 +2,14 @@ import React, { useContext, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import Button from "../Packages/Button";
+import Button from "../../Components/Common/Button";
 import useFetch from "../../Hooks/useFetch";
-import { CREATE_ACCOUNT } from "../../Config/Apis/CommonAPIs";
+import { CREATE_ACCOUNT } from "../../Constants/Apis/CommonAPIs";
 import { AuthContext } from "../../Context/Auth";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../../Config/RoutePoints/ProductRoutes";
-import EnterHandler from "../Packages/EnterHandler";
-import { LOGIN } from "../../Config/RoutePoints/commonEndpoints";
+import { HOME } from "../../Constants/RoutePoints/ProductRoutes";
+import EnterHandler from "../../Components/Common/EnterHandler";
+import { LOGIN } from "../../Constants/RoutePoints/commonEndpoints";
 
 interface userInfo {
   user: string;

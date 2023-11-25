@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { productTypes } from "../Dashboard/Products/Types";
+import { productTypes } from "./Types";
 import useFetchNew from "../../Hooks/useFetchNew";
-import { GET_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
-import { ERROR_MSG } from "../../Config/Constants";
-import ProductCard from "../Packages/ProductCard";
+import { GET_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
+import { ERROR_MSG } from "../../Constants/Constants";
+import ProductCard from "./ProductCard";
 import Skeleton from "react-loading-skeleton";
 
 const ProductSearch = () => {

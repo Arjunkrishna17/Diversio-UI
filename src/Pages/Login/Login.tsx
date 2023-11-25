@@ -3,17 +3,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { ReactComponent as LoginSvg } from "../../Images/Login.svg";
-import Input from "../Packages/Input";
-import Button from "../Packages/Button";
+import { ReactComponent as LoginSvg } from "../../Assets/Images/Login.svg";
+import Input from "../../Components/Common/Input";
+import Button from "../../Components/Common/Button";
 import useFetch from "../../Hooks/useFetch";
 import { AuthContext } from "../../Context/Auth";
-import { LOGIN_API } from "../../Config/Apis/CommonAPIs";
-import { CREATE_ACCOUNT, LOGIN } from "../../Config/RoutePoints/commonEndpoints";
+import { LOGIN_API } from "../../Constants/Apis/CommonAPIs";
+import {
+  CREATE_ACCOUNT,
+  LOGIN,
+} from "../../Constants/RoutePoints/commonEndpoints";
 import CreateAccount from "./CreateAccount";
-import EnterHandler from "../Packages/EnterHandler";
-import { HOME } from "../../Config/RoutePoints/ProductRoutes";
-
+import EnterHandler from "../../Components/Common/EnterHandler";
+import { HOME } from "../../Constants/RoutePoints/ProductRoutes";
 
 interface loginValues {
   username: string;

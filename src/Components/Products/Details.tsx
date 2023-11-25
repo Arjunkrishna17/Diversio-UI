@@ -1,6 +1,6 @@
 import React from "react";
 
-import { productTypes } from "../Dashboard/Products/Types";
+import { productTypes } from "./Types";
 
 interface detailsProps {
   data: productTypes;
