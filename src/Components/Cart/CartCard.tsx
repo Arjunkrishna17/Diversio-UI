@@ -94,22 +94,22 @@ const CartCard = ({ product }: cartCardProps) => {
   };
 
   return (
-    <div className="flex flex-col space-y-3 relative w-full justify-center  px-5  bg-white border shadow-md h-48">
+    <div className="flex flex-col space-y-3 relative w-full justify-center  px-5 py-2 bg-white border shadow-md ">
       <button
         onClick={deleteProducts}
-        className="absolute right-5 top-5 font-semi-bold"
+        className="flex justify-center items-center absolute right-5 top-5 font-semi-bold border w-6 h-6 rounded-full text-center hover:bg-gray-200"
         disabled={isLoading}
       >
         {isLoading ? (
           <Spinner className="w-5 h-5 fill-blue-500 animate-spin stroke-white" />
         ) : (
-          "X"
+          <span>X</span>
         )}
       </button>
 
-      <div className="flex space-x-5 px-5">
-        <img className="w-36 h-36" src={product.imageUrl} alt="product" />
-        <div className="flex flex-col space-y-6 w-full h-full px-5">
+      <div className="flex flex-col space-y-5 items-center  justify-center sm:justify-start  sm:flex-row sm:space-x-5 sm:px-5">
+        <img className="w-28 h-28" src={product.imageUrl} alt="product" />
+        <div className="flex flex-col items-center sm:items-start space-y-3 w-full h-full px-5">
           <div className="relative cursor-default">
             <h4 className="line-clamp-2 peer">{product.productName}</h4>
             <DetailsOnHover text={product.productName} />

@@ -115,7 +115,7 @@ const ProductSection = ({ categoryFilter, sectionName }: props) => {
   return (
     <div className="flex flex-col w-full h-[21rem]  px-3 pt-3">
       <div className="grow w-full  px-10 py-5 bg-white border">
-        <h3 className="font-bold">{sectionName}</h3>
+        <h3 className="font-bold pb-3">{sectionName}</h3>
         {content}
       </div>
     </div>

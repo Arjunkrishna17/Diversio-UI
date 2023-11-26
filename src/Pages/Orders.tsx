@@ -50,7 +50,7 @@ const Orders = () => {
   } else if (orders.length) {
     body = orders.map((order) => <OrderCard key={order._id} order={order} />);
   } else {
-    body = <p className="bg-white tex-center px-5 py-2">No orders Yet</p>;
+    body = <p className="bg-white tex-center px-5 py-2">No orders yet</p>;
   }
 
   return (

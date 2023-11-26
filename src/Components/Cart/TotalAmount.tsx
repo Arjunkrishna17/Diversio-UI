@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 
 import Button from "../Common/Button";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,8 @@ import Skeleton from "react-loading-skeleton";
 import { CHECKOUT } from "../../Constants/RoutePoints/ProductRoutes";
 import { GET_TOTAL_PAYMENT, ORDER_API } from "../../Constants/Apis/Orders";
 import { placeOrderDetails } from "../../Types/Order";
+import { AuthContext } from "../../Context/Auth";
+import { LOGIN } from "../../Constants/RoutePoints/commonEndpoints";
 
 interface totalAmountDetails {
   totalAmount: number;
@@ -28,6 +30,15 @@ const TotalAmount = ({ products, placeOrder = true }: props) => {
 
   const navigate = useNavigate();
   const { httpRequest } = useFetchNew();
+  const authCtx = useContext(AuthContext);
+
+  const onClickButtonHandler = () => {
+    if (authCtx.loggedIn) {
+      createOrder();
+    } else {
+      navigate(LOGIN, { state: { redirect: true } });
+    }
+  };
 
   const createOrder = async () => {
     setButtonLoading(true);
@@ -109,7 +120,7 @@ const TotalAmount = ({ products, placeOrder = true }: props) => {
             <Button
               isLoading={isLoading || buttonLoading}
               text="PLACE ORDER"
-              callback={() => createOrder()}
+              callback={() => onClickButtonHandler()}
               type={"primary"}
             />
           )}

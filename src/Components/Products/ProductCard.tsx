@@ -20,7 +20,7 @@ const ProductCard = ({ product }: productCardProps) => {
     <div
       onClick={() => onClickHandler(product._id)}
       key={product.title}
-      className="flex  flex-col items-center h-60 space-y-5 py-5 px-5 cursor-pointer border rounded-lg shadow-lg my-5 bg-white hover:bg-gray-100"
+      className="flex  flex-col items-center h-60 space-y-5 py-5 px-5 cursor-pointer border rounded-lg shadow-lg  bg-white hover:bg-gray-100 mb-3"
     >
       <div className="flex justify-center items-center">
         <img src={product.images[0]} alt="product" className="h-24 w-24 " />

@@ -18,7 +18,7 @@ import Checkout from "./Pages/Checkout";
 import { ORDERS, ORDER_SUCCESS_PAGE } from "./Constants/RoutePoints/Orders";
 import OrderSuccess from "./Components/Checkout/OrderSuccess";
 import NotFound from "./Utils/NotFound";
-import ProductSearch from "./Components/Products/ProductSearch";
+import SearchPage from "./Pages/SearchPage";
 import Dashboard from "./Pages/Dashboard";
 import Orders from "./Pages/Orders";
 
@@ -57,7 +57,7 @@ const App = () => {
               element={authCtx.loggedIn ? <Orders /> : <Login />}
             />
 
-            <Route path={PRODUCT_SEARCH_ROUTE} element={<ProductSearch />} />
+            <Route path={PRODUCT_SEARCH_ROUTE} element={<SearchPage />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

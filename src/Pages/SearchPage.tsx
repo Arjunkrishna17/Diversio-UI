@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { productTypes } from "../../Types/Product";
-import useFetchNew from "../../Hooks/useFetchNew";
-import { GET_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
-import { ERROR_MSG } from "../../Constants/Constants";
-import ProductCard from "./ProductCard";
+import { productTypes } from "../Types/Product";
+import useFetchNew from "../Hooks/useFetchNew";
+import { GET_PRODUCTS } from "../Constants/Apis/ProductsAPIs";
+import { ERROR_MSG } from "../Constants/Constants";
+import ProductCard from "../Components/Products/ProductCard";
 import Skeleton from "react-loading-skeleton";
 
-const ProductSearch = () => {
+const SearchPage = () => {
   const [products, setProducts] = useState<productTypes[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -73,7 +73,7 @@ const ProductSearch = () => {
     );
   } else {
     body = (
-      <div className="grid grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-3 h-fit">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
@@ -84,4 +84,4 @@ const ProductSearch = () => {
   return <div className="flex w-full h-full px-10 py-5">{body}</div>;
 };
 
-export default ProductSearch;
+export default SearchPage;
