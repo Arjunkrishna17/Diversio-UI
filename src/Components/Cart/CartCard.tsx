@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 
 import { ProductContext } from "../../Context/Product";
-import DetailsOnHover from "../Packages/DetailsOnHover";
-import { savedProducts } from "../Constants/Types";
+import DetailsOnHover from "../Common/DetailsOnHover";
+import { savedProducts } from "../Types/Types";
 import { AuthContext } from "../../Context/Auth";
 import useFetchNew from "../../Hooks/useFetchNew";
-import { CART_PRODUCTS } from "../../Config/Apis/ProductsAPIs";
-import { ERROR_MSG } from "../../Config/Constants";
+import { CART_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
+import { ERROR_MSG } from "../../Constants/Constants";
+import { ReactComponent as Spinner } from "../../Assets/Images/Spinner.svg";
 
 interface cartCardProps {
   product: savedProducts;
@@ -14,6 +15,7 @@ interface cartCardProps {
 
 const CartCard = ({ product }: cartCardProps) => {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const productCtx = useContext(ProductContext);
   const authCtx = useContext(AuthContext);
@@ -27,6 +29,8 @@ const CartCard = ({ product }: cartCardProps) => {
       method: "DELETE",
     };
 
+    setIsLoading(true);
+
     const response = await httpRequest(requestConfig);
     if (response.success) {
       productCtx.getProducts();
@@ -36,6 +40,7 @@ const CartCard = ({ product }: cartCardProps) => {
     } else {
       setError(ERROR_MSG);
     }
+    setIsLoading(false);
   };
 
   const updateQty = async (isAdd: boolean) => {
@@ -93,8 +98,13 @@ const CartCard = ({ product }: cartCardProps) => {
       <button
         onClick={deleteProducts}
         className="absolute right-5 top-5 font-semi-bold"
+        disabled={isLoading}
       >
-        X
+        {isLoading ? (
+          <Spinner className="w-5 h-5 fill-blue-500 animate-spin stroke-white" />
+        ) : (
+          "X"
+        )}
       </button>
 
       <div className="flex space-x-5 px-5">
@@ -118,7 +128,7 @@ const CartCard = ({ product }: cartCardProps) => {
             >
               <img
                 className="w-5 h-5"
-                src={require("../../Images/Dash.svg").default}
+                src={require("../../Assets/Images/Dash.svg").default}
                 alt="plus"
               />
             </button>
@@ -129,7 +139,7 @@ const CartCard = ({ product }: cartCardProps) => {
             >
               <img
                 className="w-5 h-5"
-                src={require("../../Images/Plus.svg").default}
+                src={require("../../Assets/Images/Plus.svg").default}
                 alt="plus"
               />
             </button>

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ReactComponent as Bag } from "../../Images/Bag.svg";
+import { ReactComponent as Bag } from "../../Assets/Images/Bag.svg";
 import { ProductContext } from "../../Context/Product";
-import { CART_ROUTE } from "../../Config/RoutePoints/ProductRoutes";
+import { CART_ROUTE } from "../../Constants/RoutePoints/ProductRoutes";
 
 const ShoppingCart = () => {
   const productCtx = useContext(ProductContext);

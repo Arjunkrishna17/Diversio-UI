@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Card from "./Card";
-import Button from "../../Packages/Button";
+import Button from "../../Common/Button";
 import useFetchNew from "../../../Hooks/useFetchNew";
-import { COD_PAYMENT_API } from "../../../Config/Apis/Orders";
+import { COD_PAYMENT_API } from "../../../Constants/Apis/Orders";
 import { useNavigate } from "react-router-dom";
-import { ORDER_SUCCESS_PAGE } from "../../../Config/RoutePoints/Orders";
+import { ORDER_SUCCESS_PAGE } from "../../../Constants/RoutePoints/Orders";
 
 const stripePromise = loadStripe(
   process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string
@@ -14,7 +14,7 @@ const stripePromise = loadStripe(
 
 interface props {
   clientSecret: { clientSecret: string; amount: number };
-  orderId: string;
+  cartId: string;
 }
 
 const enum PAYMENT_TYPE {
@@ -22,7 +22,7 @@ const enum PAYMENT_TYPE {
   COD,
 }
 
-const Payment = ({ clientSecret, orderId }: props) => {
+const Payment = ({ clientSecret, cartId }: props) => {
   const [showPaymentType, setPaymentType] = useState<PAYMENT_TYPE>(
     PAYMENT_TYPE.CARD
   );
@@ -39,7 +39,7 @@ const Payment = ({ clientSecret, orderId }: props) => {
 
   const codConfirmPayment = async () => {
     const requestConfig = {
-      endPoint: COD_PAYMENT_API + "?orderId=" + orderId,
+      endPoint: COD_PAYMENT_API + "?cartId=" + cartId,
     };
 
     setIsLoading(true);
@@ -47,7 +47,7 @@ const Payment = ({ clientSecret, orderId }: props) => {
     const response = await httpRequest(requestConfig);
 
     if (response.success) {
-      navigate(ORDER_SUCCESS_PAGE + "?orderId=" + orderId, { replace: true });
+      navigate(ORDER_SUCCESS_PAGE + "?cartId=" + cartId, { replace: true });
     } else if (response.error) {
       setError(response.error);
     } else {
@@ -65,9 +65,12 @@ const Payment = ({ clientSecret, orderId }: props) => {
           (showPaymentType === PAYMENT_TYPE.CARD ? " bg-orange-50" : "")
         }
       >
-        <div className="flex items-center space-x-1">
+        <div
+          onClick={() => setPaymentType(PAYMENT_TYPE.CARD)}
+          className="flex items-center space-x-1 cursor-pointer"
+        >
           <input
-            onClick={() => setPaymentType(PAYMENT_TYPE.CARD)}
+            onChange={() => setPaymentType(PAYMENT_TYPE.CARD)}
             type="radio"
             checked={showPaymentType === PAYMENT_TYPE.CARD}
           />
@@ -76,7 +79,7 @@ const Payment = ({ clientSecret, orderId }: props) => {
 
         {showPaymentType === PAYMENT_TYPE.CARD && (
           <Elements stripe={stripePromise} options={options}>
-            <Card amount={clientSecret.amount} orderId={orderId} />
+            <Card amount={clientSecret.amount} cartId={cartId} />
           </Elements>
         )}
       </div>
@@ -87,9 +90,12 @@ const Payment = ({ clientSecret, orderId }: props) => {
           (showPaymentType === PAYMENT_TYPE.COD ? " bg-orange-50" : "")
         }
       >
-        <div className="flex items-center px-5 py-2 space-x-1">
+        <div
+          onClick={() => setPaymentType(PAYMENT_TYPE.COD)}
+          className="flex items-center px-5 py-2 space-x-1 cursor-pointer"
+        >
           <input
-            onClick={() => setPaymentType(PAYMENT_TYPE.COD)}
+            onChange={() => setPaymentType(PAYMENT_TYPE.COD)}
             type="radio"
             checked={showPaymentType === PAYMENT_TYPE.COD}
           />

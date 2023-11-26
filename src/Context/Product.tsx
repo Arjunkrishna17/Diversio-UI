@@ -7,11 +7,11 @@ import React, {
 } from "react";
 
 import { CART } from "../Config/LocStorage";
-import { savedProducts } from "../Components/Constants/Types";
+import { savedProducts } from "../Components/Types/Types";
 import { AuthContext } from "./Auth";
 import useFetchNew from "../Hooks/useFetchNew";
-import { CART_PRODUCTS } from "../Config/Apis/ProductsAPIs";
-import { ERROR_MSG } from "../Config/Constants";
+import { CART_PRODUCTS } from "../Constants/Apis/ProductsAPIs";
+import { ERROR_MSG } from "../Constants/Constants";
 
 interface productCtx {
   children: React.ReactNode;

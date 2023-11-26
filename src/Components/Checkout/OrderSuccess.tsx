@@ -3,12 +3,12 @@ import Confetti from "react-confetti";
 import Skeleton from "react-loading-skeleton";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { ReactComponent as Tick } from "../../Images/Tick.svg";
-import Button from "../Packages/Button";
-import { HOME } from "../../Config/RoutePoints/ProductRoutes";
+import { ReactComponent as Tick } from "../../Assets/Images/Tick.svg";
+import Button from "../Common/Button";
+import { HOME } from "../../Constants/RoutePoints/ProductRoutes";
 import useFetchNew from "../../Hooks/useFetchNew";
-import { ERROR_MSG } from "../../Config/Constants";
-import { PAYMENT_STATUS } from "../../Config/Apis/Orders";
+import { ERROR_MSG } from "../../Constants/Constants";
+import { PAYMENT_STATUS } from "../../Constants/Apis/Orders";
 import { CS } from "../../Config/LocStorage";
 import { ProductContext } from "../../Context/Product";
 
@@ -32,14 +32,14 @@ const OrderSuccess = () => {
 
   const getProducts = productCtx.getProducts;
 
-  const orderId = urlParams.get("orderId");
+  const orderId = urlParams.get("cartId");
 
   useEffect(() => {
     let apiCount = 0;
 
     const getPaymentStatus = async () => {
       const requestConfig = {
-        endPoint: PAYMENT_STATUS + "?orderId=" + orderId,
+        endPoint: PAYMENT_STATUS + "?cartId=" + orderId,
       };
 
       const response = await httpRequest(requestConfig);
@@ -91,7 +91,7 @@ const OrderSuccess = () => {
       icon: (
         <div className="flex w-20 h-20 rounded-full bg-red-500 items-center justify-center">
           <img
-            src={require("../../Images/Failed.svg").default}
+            src={require("../../Assets/Images/Failed.svg").default}
             className="w-10 h-10"
             alt="failed"
           />
@@ -104,7 +104,7 @@ const OrderSuccess = () => {
       icon: (
         <div className="flex w-20 h-20 rounded-full bg-red-500 items-center justify-center">
           <img
-            src={require("../../Images/Failed.svg").default}
+            src={require("../../Assets/Images/Failed.svg").default}
             className="w-10 h-10"
             alt="failed"
           />
@@ -117,7 +117,7 @@ const OrderSuccess = () => {
       icon: (
         <div className="flex w-20 h-20 rounded-full bg-gray-300 items-center justify-center">
           <img
-            src={require("../../Images/Pending.svg").default}
+            src={require("../../Assets/Images/Pending.svg").default}
             className="w-10 h-10"
             alt="pending"
           />
@@ -153,8 +153,6 @@ const OrderSuccess = () => {
             {statusIcons[status as keyof typeof statusIcons].subText}
           </span>
         </div>
-
-        <p className="opacity-60">Order ID: {orderId}</p>
 
         <Button
           text="Continue Shopping"

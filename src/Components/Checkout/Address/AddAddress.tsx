@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import Button from "../../Packages/Button";
-import { ADDRESS_API } from "../../../Config/Apis/ProductsAPIs";
+import Button from "../../Common/Button";
+import { ADDRESS_API } from "../../../Constants/Apis/ProductsAPIs";
 import useFetchNew from "../../../Hooks/useFetchNew";
-import { ERROR_MSG } from "../../../Config/Constants";
-import { address } from "../Type";
+import { ERROR_MSG } from "../../../Constants/Constants";
+import { address } from "../../../Types/User";
 
 interface props {
   callback: (address: address, closeAddress: boolean) => void;

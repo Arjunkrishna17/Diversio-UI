@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-import Button from "../Packages/Button";
+import Button from "../Common/Button";
 import { useNavigate } from "react-router-dom";
 import useFetchNew from "../../Hooks/useFetchNew";
-import { ERROR_MSG } from "../../Config/Constants";
+import { ERROR_MSG } from "../../Constants/Constants";
 import Skeleton from "react-loading-skeleton";
-import { CHECKOUT } from "../../Config/RoutePoints/ProductRoutes";
-import { GET_TOTAL_PAYMENT, ORDER_API } from "../../Config/Apis/Orders";
+import { CHECKOUT } from "../../Constants/RoutePoints/ProductRoutes";
+import { GET_TOTAL_PAYMENT, ORDER_API } from "../../Constants/Apis/Orders";
+import { placeOrderDetails } from "../../Types/Order";
 
 interface totalAmountDetails {
   totalAmount: number;
@@ -14,10 +15,7 @@ interface totalAmountDetails {
 }
 
 interface props {
-  products: {
-    productId: string;
-    quantity: number;
-  }[];
+  products: placeOrderDetails[];
 
   placeOrder?: boolean;
 }
@@ -43,7 +41,7 @@ const TotalAmount = ({ products, placeOrder = true }: props) => {
     const response = await httpRequest(requestConfig);
 
     if (response.success) {
-      navigate(CHECKOUT + "?orderId=" + response.data.orderId);
+      navigate(CHECKOUT + "?id=" + response.data.cartId);
     } else if (response.error) {
       setError(response.error);
     } else {
