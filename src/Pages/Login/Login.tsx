@@ -34,8 +34,6 @@ const Login = () => {
 
   const authContext = useContext(AuthContext);
 
-  console.log(location.state);
-
   const signIn = async (values: loginValues) => {
     const requestConfig = {
       endPoint: LOGIN_API,

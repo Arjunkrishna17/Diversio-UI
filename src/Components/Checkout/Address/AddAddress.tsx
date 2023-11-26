@@ -6,7 +6,7 @@ import Button from "../../Common/Button";
 import { ADDRESS_API } from "../../../Constants/Apis/ProductsAPIs";
 import useFetchNew from "../../../Hooks/useFetchNew";
 import { ERROR_MSG } from "../../../Constants/Constants";
-import { address } from "../Type";
+import { address } from "../../../Types/User";
 
 interface props {
   callback: (address: address, closeAddress: boolean) => void;

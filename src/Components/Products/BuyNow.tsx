@@ -7,7 +7,7 @@ import { ORDER_API } from "../../Constants/Apis/Orders";
 import { CHECKOUT } from "../../Constants/RoutePoints/ProductRoutes";
 import Button from "../Common/Button";
 import { CART_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
-import { productTypes } from "./Types";
+import { productTypes } from "../../Types/Product";
 import { ProductContext } from "../../Context/Product";
 import { AuthContext } from "../../Context/Auth";
 import { LOGIN } from "../../Constants/RoutePoints/commonEndpoints";
@@ -25,21 +25,25 @@ const BuyNow = ({ product }: props) => {
   const productCtx = useContext(ProductContext);
   const authCtx = useContext(AuthContext);
 
+  const body = {
+    productId: product._id,
+    quantity: 1,
+  };
+
   const addToCart = async () => {
     setIsLoading(true);
-
-    const body = {
-      productId: product._id,
-      productName: product.title,
-      price: product.price,
-      imageUrl: product.images[0],
-      quantity: 1,
-    };
 
     const requestConfig = {
       endPoint: CART_PRODUCTS,
       method: "POST",
-      body: [body],
+      body: [
+        {
+          ...body,
+          productName: product.title,
+          imageUrl: product.images[0],
+          price: product.price,
+        },
+      ],
     };
 
     const response = await httpRequest(requestConfig);
@@ -54,13 +58,13 @@ const BuyNow = ({ product }: props) => {
     const requestConfig = {
       endPoint: ORDER_API,
       method: "POST",
-      body: { products: [{ productId: product._id, quantity: 1 }] },
+      body: { products: [body] },
     };
 
     const response = await httpRequest(requestConfig);
 
     if (response.success) {
-      navigate(CHECKOUT + "?orderId=" + response.data.orderId);
+      navigate(CHECKOUT + "?id=" + response.data.cartId);
     } else if (response.error) {
       setError(response.error);
     } else {

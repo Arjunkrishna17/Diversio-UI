@@ -11,25 +11,17 @@ import {
   LOGIN,
 } from "../../Constants/RoutePoints/commonEndpoints";
 import { AuthContext } from "../../Context/Auth";
-
-const enum BUTTON_TYPE {
-  LOGIN,
-  LOGOUT,
-}
+import Account from "./Account";
 
 const Header = () => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
   const location = useLocation();
 
-  const hideLogin =
+  const hide =
     location.pathname === CREATE_ACCOUNT || location.pathname === LOGIN;
 
-  const buttonHandler = (type: BUTTON_TYPE) => {
-    if (BUTTON_TYPE.LOGOUT) {
-      authCtx.logoutHandler();
-    }
-
+  const buttonHandler = () => {
     navigate(LOGIN);
   };
 
@@ -41,30 +33,38 @@ const Header = () => {
           <p className="text-lg md:text-xl font-bold font-poppins">Diversio</p>
         </a>
 
-        <div className=" hidden md:flex w-full border justify-center">
+        {!hide && (
+          <>
+            <div className=" hidden md:flex w-full border justify-center">
+              <Search />
+            </div>
+
+            <div className="flex space-x-8 items-center">
+              <div>
+                {!authCtx.loggedIn ? (
+                  <Button
+                    text={"Login"}
+                    type="primary"
+                    callback={() => {
+                      buttonHandler();
+                    }}
+                  />
+                ) : (
+                  <Account />
+                )}
+              </div>
+
+              <ShoppingCart />
+            </div>
+          </>
+        )}
+      </div>
+
+      {!hide && (
+        <div className="flex md:hidden w-full border justify-center ">
           <Search />
         </div>
-
-        <div className="flex space-x-5 items-center">
-          {!hideLogin && (
-            <Button
-              text={authCtx.loggedIn ? "Logout" : "Login"}
-              type="primary"
-              callback={() => {
-                buttonHandler(
-                  authCtx.loggedIn ? BUTTON_TYPE.LOGOUT : BUTTON_TYPE.LOGIN
-                );
-              }}
-            />
-          )}
-
-          <ShoppingCart />
-        </div>
-      </div>
-
-      <div className="flex md:hidden w-full border justify-center ">
-        <Search />
-      </div>
+      )}
     </div>
   );
 };

@@ -9,45 +9,41 @@ import { CART_ROUTE, HOME } from "../Constants/RoutePoints/ProductRoutes";
 import useFetchNew from "../Hooks/useFetchNew";
 import { ERROR_MSG } from "../Constants/Constants";
 import { GET_PAYMENT_INTENT, ORDER_API } from "../Constants/Apis/Orders";
-import { orderProductsType } from "../Components/Types/Types";
 import Skeleton from "react-loading-skeleton";
 import { CS } from "../Config/LocStorage";
 import Button from "../Components/Common/Button";
 import TestCard from "../Components/Checkout/Payment/TestCard";
+import { orderDetails, placeOrderDetails } from "../Types/Order";
 
 const enum MENU_TYPE {
   ADDRESS,
   PAYMENT,
 }
 
-interface orderDetails {
-  products: orderProductsType[];
-}
-
 const Checkout = () => {
   const [showMenu, setShowMenu] = useState<MENU_TYPE>(MENU_TYPE.ADDRESS);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [order, setOrder] = useState<orderDetails>();
+  const [order, setOrder] = useState<orderDetails[]>([]);
   const [addressSelected, setAddressSelected] = useState(false);
 
   const [urlParam] = useSearchParams();
   const navigate = useNavigate();
   const { httpRequest } = useFetchNew();
 
-  const orderId = urlParam.get("orderId");
+  const cartId = urlParam.get("id");
 
   const clientSecret = localStorage.getItem(CS)
     ? JSON.parse(localStorage.getItem(CS) as string)
     : undefined;
 
-  if (!orderId) {
+  if (!cartId) {
     navigate(HOME, { replace: true });
   }
 
   useEffect(() => {
     const getOrder = async () => {
-      const requestConfig = { endPoint: ORDER_API + "?orderId=" + orderId };
+      const requestConfig = { endPoint: ORDER_API + "?cartId=" + cartId };
 
       const response = await httpRequest(requestConfig);
       if (response.success) {
@@ -62,10 +58,10 @@ const Checkout = () => {
       setIsLoading(false);
     };
 
-    if (orderId) {
+    if (cartId) {
       getOrder();
     }
-  }, [httpRequest, orderId]);
+  }, [httpRequest, cartId]);
 
   useEffect(() => {
     //Remove old client secret
@@ -73,7 +69,7 @@ const Checkout = () => {
 
     const getClient = async () => {
       const requestConfig = {
-        endPoint: GET_PAYMENT_INTENT + "?orderId=" + orderId,
+        endPoint: GET_PAYMENT_INTENT + "?cartId=" + cartId,
       };
 
       const response = await httpRequest(requestConfig);
@@ -81,7 +77,7 @@ const Checkout = () => {
       if (response.success) {
         localStorage.setItem(
           CS,
-          JSON.stringify({ ...response.data, orderId: orderId })
+          JSON.stringify({ ...response.data, orderId: cartId })
         );
       } else if (response.error) {
         setError(response.error);
@@ -90,10 +86,10 @@ const Checkout = () => {
       }
     };
 
-    if (orderId && !clientSecret) {
+    if (cartId && !clientSecret) {
       getClient();
     }
-  }, [httpRequest, orderId, clientSecret]);
+  }, [httpRequest, cartId, clientSecret]);
 
   const addressCallback = () => {
     setShowMenu(MENU_TYPE.PAYMENT);
@@ -111,6 +107,14 @@ const Checkout = () => {
   };
 
   let body;
+
+  let productIds: placeOrderDetails[] = [];
+
+  if (order.length) {
+    productIds = order.map((order) => {
+      return { productId: order.product._id, quantity: order.quantity };
+    });
+  }
 
   if (isLoading) {
     body = (
@@ -149,7 +153,7 @@ const Checkout = () => {
               {addressSelected && <Tick className="w-5 h-5 fill-green-600" />}
             </div>
             {showMenu === MENU_TYPE.ADDRESS && (
-              <Address callback={addressCallback} orderId={orderId as string} />
+              <Address callback={addressCallback} cartId={cartId as string} />
             )}
 
             {error && <p className="text-xs text-red-500 px-5">{error}</p>}
@@ -168,17 +172,14 @@ const Checkout = () => {
               </button>
             </div>
             {showMenu === MENU_TYPE.PAYMENT && clientSecret && (
-              <Payment
-                clientSecret={clientSecret}
-                orderId={orderId as string}
-              />
+              <Payment clientSecret={clientSecret} cartId={cartId as string} />
             )}
           </div>
         </div>
 
         <div className="flex flex-col space-y-5 ">
-          {order?.products && order.products.length && (
-            <TotalAmount products={order.products} placeOrder={false} />
+          {productIds.length && (
+            <TotalAmount products={productIds} placeOrder={false} />
           )}
           <TestCard />
         </div>

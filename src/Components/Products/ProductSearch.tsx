@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { productTypes } from "./Types";
+import { productTypes } from "../../Types/Product";
 import useFetchNew from "../../Hooks/useFetchNew";
 import { GET_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
 import { ERROR_MSG } from "../../Constants/Constants";

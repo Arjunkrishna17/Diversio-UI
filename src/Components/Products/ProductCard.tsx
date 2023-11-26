@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { productTypes } from "./Types";
+import { productTypes } from "../../Types/Product";
 import { PRODUCT_PAGE } from "../../Constants/RoutePoints/ProductRoutes";
 import { ReactComponent as Rupees } from "../../Assets/Images/Rupees.svg";
 

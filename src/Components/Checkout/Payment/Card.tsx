@@ -11,10 +11,10 @@ import { ReactComponent as Rupees } from "../../../Assets/Images/Rupees.svg";
 
 interface props {
   amount: number;
-  orderId: string;
+  cartId: string;
 }
 
-const Card = ({ amount, orderId }: props) => {
+const Card = ({ amount, cartId }: props) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,7 +31,7 @@ const Card = ({ amount, orderId }: props) => {
     const response = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: STRIPE_CONFIRM_RETURN_URL + "?orderId=" + orderId,
+        return_url: STRIPE_CONFIRM_RETURN_URL + "?cartId=" + cartId,
       },
     });
 

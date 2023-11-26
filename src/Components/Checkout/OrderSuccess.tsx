@@ -32,14 +32,14 @@ const OrderSuccess = () => {
 
   const getProducts = productCtx.getProducts;
 
-  const orderId = urlParams.get("orderId");
+  const orderId = urlParams.get("cartId");
 
   useEffect(() => {
     let apiCount = 0;
 
     const getPaymentStatus = async () => {
       const requestConfig = {
-        endPoint: PAYMENT_STATUS + "?orderId=" + orderId,
+        endPoint: PAYMENT_STATUS + "?cartId=" + orderId,
       };
 
       const response = await httpRequest(requestConfig);
@@ -153,8 +153,6 @@ const OrderSuccess = () => {
             {statusIcons[status as keyof typeof statusIcons].subText}
           </span>
         </div>
-
-        <p className="opacity-60">Order ID: {orderId}</p>
 
         <Button
           text="Continue Shopping"

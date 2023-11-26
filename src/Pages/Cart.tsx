@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
-import CartCard from "./CartCard";
-import { ProductContext } from "../../Context/Product";
+import CartCard from "../Components/Cart/CartCard";
+import { ProductContext } from "../Context/Product";
 
-import { savedProducts } from "../Types/Types";
-import TotalAmount from "./TotalAmount";
+import { savedProducts } from "../Components/Types/Types";
+import TotalAmount from "../Components/Cart/TotalAmount";
 
 const Cart = () => {
   const productCtx = useContext(ProductContext);
@@ -48,7 +48,10 @@ const Cart = () => {
   const items = productCtx.products;
 
   const products = items.map((product) => {
-    return { productId: product.productId, quantity: product.quantity };
+    return {
+      productId: product.productId,
+      quantity: product.quantity,
+    };
   });
 
   return (

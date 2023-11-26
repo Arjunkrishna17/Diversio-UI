@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 
 import Button from "../Common/Button";
-import { productTypes } from "./Types";
+import { productTypes } from "../../Types/Product";
 import { ProductContext } from "../../Context/Product";
 import { AuthContext } from "../../Context/Auth";
 import useFetchNew from "../../Hooks/useFetchNew";
@@ -48,7 +48,10 @@ const AddCart = ({ product }: addCartProps) => {
     };
 
     if (authCtx.loggedIn) {
-      addToCart(saveProduct);
+      const timeId = setTimeout(() => {
+        addToCart(saveProduct);
+        clearTimeout(timeId);
+      }, 100);
     } else {
       const timeId = setTimeout(() => {
         productCtx.addProduct(saveProduct);

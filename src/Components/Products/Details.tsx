@@ -1,6 +1,6 @@
 import React from "react";
 
-import { productTypes } from "./Types";
+import { productTypes } from "../../Types/Product";
 
 interface detailsProps {
   data: productTypes;

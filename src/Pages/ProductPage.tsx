@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 import { useFetchDataType } from "../Components/Types/Types";
 import useGetFetch from "../Hooks/useGetFetch";
 import { GET_PRODUCTS } from "../Constants/Apis/ProductsAPIs";
-import { productTypes } from "../Components/Products/Types";
 import Details from "../Components/Products/Details";
 import Skelton from "../Components/Products/Skelton";
 import AddCart from "../Components/Products/AddCart";
 import BuyNow from "../Components/Products/BuyNow";
+import { productTypes } from "../Types/Product";
 
 interface productFetch extends useFetchDataType {
   data: productTypes;

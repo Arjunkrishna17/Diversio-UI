@@ -12,15 +12,16 @@ import { ERROR_MSG } from "../../../Constants/Constants";
 import { ADDRESS_API } from "../../../Constants/Apis/ProductsAPIs";
 import AddAddress from "./AddAddress";
 import Button from "../../Common/Button";
-import { address } from "../Type";
+
 import { UPDATE_ORDER_ADDRESS_API } from "../../../Constants/Apis/Orders";
+import { address } from "../../../Types/User";
 
 interface props {
   callback: () => void;
-  orderId: string;
+  cartId: string;
 }
 
-const Address = ({ callback, orderId }: props) => {
+const Address = ({ callback, cartId }: props) => {
   const [address, setAddress] = useState<address[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -71,7 +72,7 @@ const Address = ({ callback, orderId }: props) => {
 
   const addAddress = async (selectedAddress: address) => {
     const requestConfig = {
-      endPoint: UPDATE_ORDER_ADDRESS_API + "?orderId=" + orderId,
+      endPoint: UPDATE_ORDER_ADDRESS_API + "?cartId=" + cartId,
       method: "POST",
       body: { address: selectedAddress },
     };

@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./Components/Header/Header";
-import ProductSection from "./Components/Products/ProductSection";
 import ProductPage from "./Pages/ProductPage";
-import Cart from "./Components/Cart/Cart";
+import Cart from "./Pages/Cart";
 import Login from "./Pages/Login/Login";
 import { CREATE_ACCOUNT, LOGIN } from "./Constants/RoutePoints/commonEndpoints";
 import {
@@ -16,11 +15,12 @@ import {
 import { CART } from "./Config/LocStorage";
 import { AuthContext } from "./Context/Auth";
 import Checkout from "./Pages/Checkout";
-import { ORDER_SUCCESS_PAGE } from "./Constants/RoutePoints/Orders";
+import { ORDERS, ORDER_SUCCESS_PAGE } from "./Constants/RoutePoints/Orders";
 import OrderSuccess from "./Components/Checkout/OrderSuccess";
 import NotFound from "./Utils/NotFound";
 import ProductSearch from "./Components/Products/ProductSearch";
 import Dashboard from "./Pages/Dashboard";
+import Orders from "./Pages/Orders";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -50,6 +50,11 @@ const App = () => {
             <Route
               path={ORDER_SUCCESS_PAGE}
               element={authCtx.loggedIn ? <OrderSuccess /> : <Login />}
+            />
+
+            <Route
+              path={ORDERS}
+              element={authCtx.loggedIn ? <Orders /> : <Login />}
             />
 
             <Route path={PRODUCT_SEARCH_ROUTE} element={<ProductSearch />} />

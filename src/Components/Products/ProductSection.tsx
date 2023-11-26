@@ -8,7 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { GET_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
 import ProductCard from "./ProductCard";
-import { productTypes } from "./Types";
+import { productTypes } from "../../Types/Product"
 import useFetchNew from "../../Hooks/useFetchNew";
 import { ERROR_MSG } from "../../Constants/Constants";
 
