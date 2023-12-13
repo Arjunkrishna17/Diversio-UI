@@ -106,7 +106,7 @@ const Checkout = () => {
     setAddressSelected(false);
   };
 
-  let body;
+  let body = <div></div>;
 
   let productIds: placeOrderDetails[] = [];
 

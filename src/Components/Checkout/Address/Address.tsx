@@ -127,7 +127,7 @@ const Address = ({ callback, cartId }: props) => {
   } else {
     body = (
       <div className="flex flex-col space-y-5 pb-5">
-        {address.length &&
+        {address.length ? (
           address.map((value: address, i) => (
             <div key={value._id} className="flex px-5">
               <div
@@ -184,7 +184,10 @@ const Address = ({ callback, cartId }: props) => {
                 </button>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div></div>
+        )}
 
         {!showAddAddress && (
           <div className="flex items-center px-5 bg-white  border h-10 mx-5">
@@ -216,7 +219,7 @@ const Address = ({ callback, cartId }: props) => {
           </div>
         )}
 
-        {!showAddAddress && (
+        {!showAddAddress && address.length ? (
           <div className="mx-5">
             <Button
               text="Use this Address"
@@ -225,6 +228,8 @@ const Address = ({ callback, cartId }: props) => {
               isLoading={buttonLoading}
             />
           </div>
+        ) : (
+          <div></div>
         )}
 
         {errorOnAddAddress && (
