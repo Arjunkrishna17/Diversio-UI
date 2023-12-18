@@ -39,7 +39,7 @@ const Cart = () => {
     body = (
       <div className="flex flex-col w-full h-full space-y-2">
         {productCtx.products.map((product: savedProducts) => (
-          <CartCard key={product._id} product={product} />
+          <CartCard key={product.productId} product={product} />
         ))}
       </div>
     );
