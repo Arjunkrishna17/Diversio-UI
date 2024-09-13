@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
+import Skeleton from "react-loading-skeleton";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./slick.css";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import "./Skelton.css";
 
 import { GET_PRODUCTS } from "../../Constants/Apis/ProductsAPIs";
 import ProductCard from "./ProductCard";
-import { productTypes } from "../../Types/Product"
+import { productTypes } from "../../Types/Product";
 import useFetchNew from "../../Hooks/useFetchNew";
 import { ERROR_MSG } from "../../Constants/Constants";
+import useResponsiveSkeleton from "../../Hooks/useSkeltonCalc";
 
 interface props {
   categoryFilter: string;
@@ -21,6 +24,7 @@ const ProductSection = ({ categoryFilter, sectionName }: props) => {
   const [data, setData] = useState<productTypes[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [containerRef, count] = useResponsiveSkeleton(4);
 
   const { httpRequest } = useFetchNew();
 
@@ -90,9 +94,9 @@ const ProductSection = ({ categoryFilter, sectionName }: props) => {
 
   if (isLoading) {
     content = (
-      <div className="flex flex-col h-full w-full">
+      <div ref={containerRef} className="flex flex-col h-full w-full">
         <Skeleton
-          count={4}
+          count={count}
           containerClassName="flex w-full h-full space-x-5 my-5"
           className=" h-full"
         />

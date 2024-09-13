@@ -1,0 +1,32 @@
+/* For mobile devices */
+@media (max-width: 600px) {
+  .skeleton-container {
+    padding: 0.5rem;
+  }
+
+  .skeleton-container > * {
+    width: 100%; /* Make skeleton elements full width on small screens */
+  }
+}
+
+/* For tablets */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .skeleton-container {
+    padding: 1rem;
+  }
+
+  .skeleton-container > * {
+    width: 80%; /* Adjust width for tablets */
+  }
+}
+
+/* For larger screens */
+@media (min-width: 1025px) {
+  .skeleton-container {
+    padding: 1.5rem;
+  }
+
+  .skeleton-container > * {
+    width: 60%; /* Adjust width for larger screens */
+  }
+}
