@@ -7,6 +7,7 @@ import useFetchNew from "../../../Hooks/useFetchNew";
 import { COD_PAYMENT_API } from "../../../Constants/Apis/Orders";
 import { useNavigate } from "react-router-dom";
 import { ORDER_SUCCESS_PAGE } from "../../../Constants/RoutePoints/Orders";
+import { address } from "../../../Types/User";
 
 const stripePromise = loadStripe(
   process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string
@@ -15,6 +16,7 @@ const stripePromise = loadStripe(
 interface props {
   clientSecret: { clientSecret: string; amount: number };
   cartId: string;
+  selectedAddress: address;
 }
 
 const enum PAYMENT_TYPE {
@@ -22,7 +24,7 @@ const enum PAYMENT_TYPE {
   COD,
 }
 
-const Payment = ({ clientSecret, cartId }: props) => {
+const Payment = ({ clientSecret, cartId, selectedAddress }: props) => {
   const [showPaymentType, setPaymentType] = useState<PAYMENT_TYPE>(
     PAYMENT_TYPE.CARD
   );
@@ -79,7 +81,11 @@ const Payment = ({ clientSecret, cartId }: props) => {
 
         {showPaymentType === PAYMENT_TYPE.CARD && (
           <Elements stripe={stripePromise} options={options}>
-            <Card amount={clientSecret.amount} cartId={cartId} />
+            <Card
+              selectedAddress={selectedAddress}
+              amount={clientSecret.amount}
+              cartId={cartId}
+            />
           </Elements>
         )}
       </div>
