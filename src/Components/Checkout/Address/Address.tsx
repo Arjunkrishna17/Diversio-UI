@@ -17,7 +17,7 @@ import { UPDATE_ORDER_ADDRESS_API } from "../../../Constants/Apis/Orders";
 import { address } from "../../../Types/User";
 
 interface props {
-  callback: () => void;
+  callback: (address: address) => void;
   cartId: string;
 }
 
@@ -80,7 +80,7 @@ const Address = ({ callback, cartId }: props) => {
     const response = await httpRequest(requestConfig);
 
     if (response.success) {
-      callback();
+      callback(selectedAddress);
     } else if (response.error) {
       setErrorOnAddAddress(response.error);
     } else {

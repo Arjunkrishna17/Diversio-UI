@@ -14,6 +14,7 @@ import { CS } from "../Config/LocStorage";
 import Button from "../Components/Common/Button";
 import TestCard from "../Components/Checkout/Payment/TestCard";
 import { orderDetails, placeOrderDetails } from "../Types/Order";
+import { address } from "../Types/User";
 
 const enum MENU_TYPE {
   ADDRESS,
@@ -26,6 +27,7 @@ const Checkout = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState<orderDetails[]>([]);
   const [addressSelected, setAddressSelected] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState<address | undefined>();
 
   const [urlParam] = useSearchParams();
   const navigate = useNavigate();
@@ -91,9 +93,10 @@ const Checkout = () => {
     }
   }, [httpRequest, cartId, clientSecret]);
 
-  const addressCallback = () => {
+  const addressCallback = (address: address) => {
     setShowMenu(MENU_TYPE.PAYMENT);
     setAddressSelected(true);
+    setSelectedAddress(address);
   };
 
   const paymentMenuHandler = () => {
@@ -171,9 +174,15 @@ const Checkout = () => {
                 Payment
               </button>
             </div>
-            {showMenu === MENU_TYPE.PAYMENT && clientSecret && (
-              <Payment clientSecret={clientSecret} cartId={cartId as string} />
-            )}
+            {showMenu === MENU_TYPE.PAYMENT &&
+              clientSecret &&
+              selectedAddress && (
+                <Payment
+                  selectedAddress={selectedAddress}
+                  clientSecret={clientSecret}
+                  cartId={cartId as string}
+                />
+              )}
           </div>
         </div>
 

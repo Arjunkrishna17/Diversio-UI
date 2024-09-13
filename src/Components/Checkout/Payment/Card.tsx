@@ -3,18 +3,21 @@ import {
   PaymentElement,
   useStripe,
   useElements,
+  AddressElement,
 } from "@stripe/react-stripe-js";
 
 import { ReactComponent as Loading } from "../../../Assets/Images/Spinner.svg";
 import { STRIPE_CONFIRM_RETURN_URL } from "../../../Constants/RoutePoints/Orders";
 import { ReactComponent as Rupees } from "../../../Assets/Images/Rupees.svg";
+import { address } from "../../../Types/User";
 
 interface props {
   amount: number;
   cartId: string;
+  selectedAddress: address;
 }
 
-const Card = ({ amount, cartId }: props) => {
+const Card = ({ amount, cartId, selectedAddress }: props) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,6 +56,23 @@ const Card = ({ amount, cartId }: props) => {
       <div className="flex flex-col space-y-2  w-full ">
         <div className="flex flex-col w-full px-4 py-5 space-y-5">
           <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
+
+          <AddressElement
+            options={{
+              mode: "billing",
+              defaultValues: {
+                name: selectedAddress.fullName,
+                address: {
+                  line1: selectedAddress.address1,
+                  line2: selectedAddress.address2,
+                  country: "IN",
+                  city: selectedAddress.city,
+                  state: selectedAddress.state,
+                  postal_code: selectedAddress.pincode,
+                },
+              },
+            }}
+          />
 
           <div>
             <button
